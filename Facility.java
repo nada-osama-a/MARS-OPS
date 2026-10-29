@@ -11,7 +11,7 @@ public abstract class Facility {
     private final ArrayList<Equipment> equipment = new ArrayList<>();
     private final ArrayList<Resource> resources = new ArrayList<>();
 
-    public Facility(String name, int id, int capacity, String location, boolean isOperational, String[] equipment2) {
+    public Facility(String name, int id, int capacity, String location, boolean isOperational) {
 
         if (id < 0) {
             throw new IllegalArgumentException("ID cannot be negative");
