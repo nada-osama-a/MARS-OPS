@@ -1,43 +1,43 @@
 public class Equipment {
 
-    private final String name;
-    private final String type;
-    private boolean operational;
+private final String name;
+private final EquipmentType type;
+private boolean operational;
 
-    public Equipment(String name, String type, boolean operational) {
-        if (name == null || name.trim().isEmpty()) {
-            throw new IllegalArgumentException("Name cannot be null or blank");
-        }
-
-        if (type == null || type.trim().isEmpty()) {
-            throw new IllegalArgumentException("Type cannot be null or blank");
-        }
-
-        this.name = name;
-        this.type = type;
-        this.operational = operational;
+public Equipment(String name, EquipmentType type, boolean operational) {
+    if (name == null || name.trim().isEmpty()) {
+        throw new IllegalArgumentException("Name cannot be null or blank");
     }
 
-    public String getName() {
-        return name;
+    if (type == null) {
+        throw new IllegalArgumentException("Type cannot be null");
     }
 
-    public String getType() {
-        return type;
-    }
+    this.name = name;
+    this.type = type;
+    this.operational = operational;
+}
 
-    public boolean isOperational() {
-        return operational;
-    }
+public String getName() {
+    return name;
+}
 
-    public void setOperational(boolean operational) {
-        this.operational = operational;
-    }
+public EquipmentType getType() {
+    return type;
+}
 
-    @Override
-    public String toString() {
-        return "Equipment{name='" + name + '\''
-                + ", type='" + type + '\''
-                + ", operational=" + operational + '}';
-    }
+public boolean isOperational() {
+    return operational;
+}
+
+public void setOperational(boolean operational) {
+    this.operational = operational;
+}
+
+@Override
+public String toString() {
+    return "Equipment{name='" + name + '\''
+            + ", type=" + type
+            + ", operational=" + operational + '}';
+}
 }

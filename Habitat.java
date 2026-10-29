@@ -1,142 +1,146 @@
+
 public class Habitat extends Facility {
-private static final int LEAK_EFFICIENCY_LOSS = 30;
 
-private final LifeSupportSystem lifeSupportSystem;
+    private static final int LEAK_EFFICIENCY_LOSS = 30;
 
-private LeakState leakState;
-private int leakLossAmount;
+    private final LifeSupportSystem lifeSupportSystem;
 
-public Habitat(String name, int id, int capacity, String location,
-               boolean isOperational) {
+    private LeakState leakState;
+    private int leakLossAmount;
 
-    super(name, id, capacity, location, isOperational);
+    public Habitat(String name, int id, int capacity, String location,
+                   boolean isOperational) {
 
-    lifeSupportSystem = new LifeSupportSystem();
-    leakState = LeakState.NO_LEAK;
-    leakLossAmount = 0;
-}
+        super(name, id, capacity, location, isOperational);
 
-public LeakState getLeakState() {
-    return leakState;
-}
-
-public int getLeakLossAmount() {
-    return leakLossAmount;
-}
-
-public int getLifeSupportEfficiency() {
-    return lifeSupportSystem.getEfficiency();
-}
-
-public boolean isLifeSupportOperational() {
-    return lifeSupportSystem.isOperational();
-}
-
-public boolean isLifeSupportEffective() {
-    return isOperational() && lifeSupportSystem.isEffective();
-}
-
-public void startLeak(int amount) {
-
-    if (!isOperational()) {
-        throw new IllegalStateException(
-                "Cannot start a leak in a non-operational habitat");
+        lifeSupportSystem = new LifeSupportSystem();
+        leakState = LeakState.NO_LEAK;
+        leakLossAmount = 0;
     }
 
-    if (leakState == LeakState.ACTIVE) {
-        throw new IllegalStateException(
-                "A leak is already active");
+    public LeakState getLeakState() {
+        return leakState;
     }
 
-    if (amount <= 0) {
-        throw new IllegalArgumentException(
-                "Leak amount must be positive");
+    public int getLeakLossAmount() {
+        return leakLossAmount;
     }
 
-    leakLossAmount = amount;
-    leakState = LeakState.ACTIVE;
-
-    consumeLeakOxygen(amount);
-
-    lifeSupportSystem.deactivate();
-    lifeSupportSystem.reduceEfficiency(LEAK_EFFICIENCY_LOSS);
-}
-
-public void resolveLeak() {
-
-    if (leakState != LeakState.ACTIVE) {
-        throw new IllegalStateException(
-                "There is no active leak to resolve");
+    public int getLifeSupportEfficiency() {
+        return lifeSupportSystem.getEfficiency();
     }
 
-    leakState = LeakState.RESOLVED;
-}
-
-public void endLeakUnresolved() {
-
-    if (leakState != LeakState.ACTIVE) {
-        throw new IllegalStateException(
-                "There is no active leak");
+    public boolean isLifeSupportOperational() {
+        return lifeSupportSystem.isOperational();
     }
 
-    consumeLeakOxygen(leakLossAmount);
-
-    leakState = LeakState.UNRESOLVED;
-}
-
-public void repairLifeSupport() {
-
-    if (leakState == LeakState.ACTIVE) {
-        throw new IllegalStateException(
-                "Resolve the leak before repairing life support");
+    public boolean isLifeSupportEffective() {
+        return isOperational() && lifeSupportSystem.isEffective();
     }
 
-    if (!isOperational()) {
-        throw new IllegalStateException(
-                "Cannot repair life support in a non-operational habitat");
+    public void startLeak(int amount) {
+
+        if (amount <= 0) {
+            throw new IllegalArgumentException(
+                    "Leak amount must be positive");
+        }
+
+        if (!isOperational()) {
+            throw new IllegalStateException(
+                    "Cannot start a leak in a non-operational habitat");
+        }
+
+        if (leakState == LeakState.ACTIVE) {
+            throw new IllegalStateException(
+                    "A leak is already active");
+        }
+
+        consumeLeakOxygen(amount);
+
+        leakLossAmount = amount;
+        leakState = LeakState.ACTIVE;
+
+        lifeSupportSystem.deactivate();
+        lifeSupportSystem.reduceEfficiency(LEAK_EFFICIENCY_LOSS);
     }
 
-    lifeSupportSystem.restoreFullEfficiency();
-    lifeSupportSystem.activate();
-}
+    public void resolveLeak() {
 
-private void consumeLeakOxygen(int amount) {
+        if (leakState != LeakState.ACTIVE) {
+            throw new IllegalStateException(
+                    "There is no active leak to resolve");
+        }
 
-    int availableOxygen =
-            getResourceQuantity(ResourceType.OXYGEN);
+        leakState = LeakState.RESOLVED;
+    }
 
-    int actualLoss = Math.min(amount, availableOxygen);
+    public void endLeakUnresolved() {
 
-    boolean removed = removeResourceQuantity(
-            ResourceType.OXYGEN, actualLoss);
+        if (leakState != LeakState.ACTIVE) {
+            throw new IllegalStateException(
+                    "There is no active leak");
+        }
 
-    if (!removed) {
-        throw new IllegalStateException(
-                "Failed to remove oxygen");
+        consumeLeakOxygen(leakLossAmount);
+
+        leakState = LeakState.UNRESOLVED;
+    }
+
+    public void repairLifeSupport() {
+
+        if (leakState == LeakState.ACTIVE) {
+            throw new IllegalStateException(
+                    "Resolve the leak before repairing life support");
+        }
+
+        if (!isOperational()) {
+            throw new IllegalStateException(
+                    "Cannot repair life support in a non-operational habitat");
+        }
+
+        if (lifeSupportSystem.isEffective()
+                && lifeSupportSystem.getEfficiency() == 100) {
+            throw new IllegalStateException(
+                    "Life support does not need repair");
+        }
+
+        lifeSupportSystem.restoreFullEfficiency();
+        lifeSupportSystem.activate();
+    }
+
+    private void consumeLeakOxygen(int amount) {
+
+        int availableOxygen =
+                getResourceQuantity(ResourceType.OXYGEN);
+
+        int actualLoss = Math.min(amount, availableOxygen);
+
+        boolean removed =
+                removeResourceQuantity(ResourceType.OXYGEN, actualLoss);
+
+        if (!removed) {
+            throw new IllegalStateException(
+                    "Failed to remove oxygen");
+        }
+    }
+
+    @Override
+    public String toString() {
+
+        return "Habitat{" +
+                "name='" + getName() + '\'' +
+                ", id=" + getId() +
+                ", capacity=" + getCapacity() +
+                ", location='" + getLocation() + '\'' +
+                ", operational=" + isOperational() +
+                ", leakState=" + leakState +
+                ", leakLossAmount=" + leakLossAmount +
+                ", resources=" + getResources() +
+                ", lifeSupportOperational="
+                + lifeSupportSystem.isOperational() +
+                ", lifeSupportEfficiency="
+                + lifeSupportSystem.getEfficiency() + "%" +
+                '}';
     }
 }
 
-@Override
-public String toString() {
-
-    return "Habitat{" +
-            "name='" + getName() + '\'' +
-            ", id=" + getId() +
-            ", capacity=" + getCapacity() +
-            ", location='" + getLocation() + '\'' +
-            ", operational=" + isOperational() +
-            ", leakState=" + leakState +
-            ", leakLossAmount=" + leakLossAmount +
-            ", oxygen=" +
-            getResourceQuantity(ResourceType.OXYGEN) +
-            ", water=" +
-            getResourceQuantity(ResourceType.WATER) +
-            ", food=" +
-            getResourceQuantity(ResourceType.FOOD) +
-            ", lifeSupportOperational=" +
-            lifeSupportSystem.isOperational() +
-            ", lifeSupportEfficiency=" +
-            lifeSupportSystem.getEfficiency() + "%" +
-            '}';
-}
-}
