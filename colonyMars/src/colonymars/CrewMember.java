@@ -83,5 +83,5 @@ private boolean availability;
     public void setAvailability(boolean availability) {
         this.availability = availability;
     }
-    
+    public abstract void primary_responsibility();
 }

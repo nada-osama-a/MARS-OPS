@@ -8,7 +8,7 @@ package colonymars;
  *
  * @author Yomna Mohamed
  */
-public  abstract class robots {
+public abstract class robots {
     private int Battery_level;
     private boolean healthDamage_status;
     private String Current_location;
@@ -52,5 +52,7 @@ public  abstract class robots {
     public void setAvailablility(boolean Availablility) {
         this.Availablility = Availablility;
     }
-    
+
+    public abstract void capablities();
+
 }

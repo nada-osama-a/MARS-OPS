@@ -8,6 +8,14 @@ package colonymars;
  *
  * @author Yomna Mohamed
  */
-public class MedicalOfficer {
-    
+public class MedicalOfficer extends CrewMember {
+
+    public MedicalOfficer(String name, int ID, boolean health_status, String currnet_location, String skills, String fatigue_level, boolean availability) {
+        super(name, ID, health_status, currnet_location, skills, fatigue_level, availability);
+    }
+        @Override
+    public void primary_responsibility()
+    {
+        System.out.println("responds to medical emergencies");
+    }
 }
