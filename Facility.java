@@ -23,7 +23,9 @@ public abstract class Facility {
         setLocation(location);
         setOperational(isOperational);
     }
-
+public boolean providesCommunication() {
+    return false;
+}
     public String getName() {
         return name;
     }
