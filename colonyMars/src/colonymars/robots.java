@@ -18,6 +18,22 @@ public abstract class robots extends Agents {
         this.healthDamage_status = healthDamage_status;
     }
 
+    public int getBattery_level() {
+        return Battery_level;
+    }
+
+    public void setBattery_level(int Battery_level) {
+        this.Battery_level = Battery_level;
+    }
+
+    public boolean isHealthDamage_status() {
+        return healthDamage_status;
+    }
+
+    public void setHealthDamage_status(boolean healthDamage_status) {
+        this.healthDamage_status = healthDamage_status;
+    }
+
     public abstract void capablities();
 
 }
