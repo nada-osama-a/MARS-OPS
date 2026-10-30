@@ -10,12 +10,22 @@ package colonymars;
  */
 public class Engineer extends CrewMember {
 
-    public Engineer(String name, int ID, boolean health_status, String currnet_location, String skills, String fatigue_level, boolean availability) {
-        super(name, ID, health_status, currnet_location, skills, fatigue_level, availability);
+    public Engineer(String name, int id, int skill, String fatigue_level_human, boolean health_status, String currnet_location, boolean availability, String mission) {
+        super(name, id, skill, fatigue_level_human, health_status, currnet_location, availability, mission);
     }
+
     @Override
-    public void primary_responsibility(){
-       System.out.println("repairs damaged equipment");
-       
-}
+    public void primary_responsibility() {
+        System.out.println("repairs damaged equipment");
+    }
+
+    @Override
+    public boolean canPerform(String mission) {
+        if (mission.equalsIgnoreCase("Repair")) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
 }

@@ -10,8 +10,8 @@ package colonymars;
  */
 public class ExplorationRover extends robots {
 
-    public ExplorationRover(int Battery_level, boolean healthDamage_status, String Current_location, boolean Availablility) {
-        super(Battery_level, healthDamage_status, Current_location, Availablility);
+    public ExplorationRover(int Battery_level, boolean healthDamage_status, String currnet_location, boolean availability, String mission) {
+        super(Battery_level, healthDamage_status, currnet_location, availability, mission);
     }
 
     @Override
@@ -19,4 +19,15 @@ public class ExplorationRover extends robots {
         System.out.println("Travels across the Martian surface,carries equipment and performs exploration");
 
     }
+
+    @Override
+    public boolean canPerform(String mission) {
+        if (mission.equalsIgnoreCase("Exploration")) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
 }

@@ -9,23 +9,20 @@ package colonymars;
  *
  * @author Yomna Mohamed
  */
-public abstract class CrewMember 
+public abstract class CrewMember extends Agents
 {private String name;
-private int ID;
+private int id;
+private int skill;
+private String fatigue_level_human;
 private boolean health_status;
-private String currnet_location;
-private String skills;
-private String fatigue_level;
-private boolean availability;
 
-    public CrewMember(String name, int ID, boolean health_status, String currnet_location, String skills, String fatigue_level, boolean availability) {
+    public CrewMember(String name, int id, int skill, String fatigue_level_human, boolean health_status, String currnet_location,boolean availability, String mission) {
+        super(currnet_location,availability,mission);
         this.name = name;
-        this.ID = ID;
+        this.id = id;
+        this.skill = skill;
+        this.fatigue_level_human = fatigue_level_human;
         this.health_status = health_status;
-        this.currnet_location = currnet_location;
-        this.skills = skills;
-        this.fatigue_level = fatigue_level;
-        this.availability = availability;
     }
 
     public String getName() {
@@ -36,12 +33,28 @@ private boolean availability;
         this.name = name;
     }
 
-    public int getID() {
-        return ID;
+    public int getId() {
+        return id;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getSkill() {
+        return skill;
+    }
+
+    public void setSkill(int skill) {
+        this.skill = skill;
+    }
+
+    public String getFatigue_level_human() {
+        return fatigue_level_human;
+    }
+
+    public void setFatigue_level_human(String fatigue_level_human) {
+        this.fatigue_level_human = fatigue_level_human;
     }
 
     public boolean isHealth_status() {
@@ -51,37 +64,8 @@ private boolean availability;
     public void setHealth_status(boolean health_status) {
         this.health_status = health_status;
     }
-
-    public String getCurrnet_location() {
-        return currnet_location;
-    }
-
-    public void setCurrnet_location(String currnet_location) {
-        this.currnet_location = currnet_location;
-    }
-
-    public String getSkills() {
-        return skills;
-    }
-
-    public void setSkills(String skills) {
-        this.skills = skills;
-    }
-
-    public String getFatigue_level() {
-        return fatigue_level;
-    }
-
-    public void setFatigue_level(String fatigue_level) {
-        this.fatigue_level = fatigue_level;
-    }
-
-    public boolean isAvailability() {
-        return availability;
-    }
-
-    public void setAvailability(boolean availability) {
-        this.availability = availability;
-    }
-    public abstract void primary_responsibility();
+    
+    
+     public abstract void primary_responsibility();
+     
 }
