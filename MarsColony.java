@@ -1,4 +1,4 @@
-public class ColonyMars {
+public class MarsColony {
 
     /**
      * @param args the command line arguments
