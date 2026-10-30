@@ -1,16 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 
-
-/**
- *
- * @author Yomna Mohamed
- */
 public class MedicalOfficer extends CrewMember {
 
-    public MedicalOfficer(String name, int id, int skill, String fatigue_level_human, boolean health_status, String currnet_location, boolean availability, String mission) {
+    public MedicalOfficer(String name, int id, int skill, String fatigue_level_human, boolean health_status,
+            String currnet_location, boolean availability, String mission) {
         super(name, id, skill, fatigue_level_human, health_status, currnet_location, availability, mission);
     }
 

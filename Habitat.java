@@ -1,4 +1,3 @@
-
 public class Habitat extends Facility {
 
     private static final int LEAK_EFFICIENCY_LOSS = 30;

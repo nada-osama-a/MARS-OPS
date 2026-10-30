@@ -6,8 +6,8 @@ public class RepairMission extends Mission {
     private String requiredPersonnelRole;
     private boolean requiresRepairRobot;
 
-    public RepairMission(int duration, List<Resource> requiredResources, List<Agent> requiredAgents,
-                         Facility targetFacility, String requiredPersonnelRole, boolean requiresRepairRobot) {
+    public RepairMission(int duration, List<Resource> requiredResources, List<Agents> requiredAgents,
+            Facility targetFacility, String requiredPersonnelRole, boolean requiresRepairRobot) {
         super(duration, requiredResources, requiredAgents);
         this.targetFacility = targetFacility;
         this.requiredPersonnelRole = requiredPersonnelRole;
@@ -15,14 +15,14 @@ public class RepairMission extends Mission {
     }
 
     @Override
-    public boolean checkCapabilities(List<Agent> assignedAgents) {
+    public boolean checkCapabilities(List<Agents> assignedAgents) {
         if (targetFacility == null || targetFacility.isOperational()) {
             return false;
         }
         if (assignedAgents == null) {
             return false;
         }
-        for (Agent agent : assignedAgents) {
+        for (Agents agent : assignedAgents) {
             if (!agent.isAvailable()) {
                 return false;
             }

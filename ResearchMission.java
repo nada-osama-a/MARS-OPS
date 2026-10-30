@@ -8,7 +8,7 @@ public class ResearchMission extends Mission {
     private int requiredSkillLevel;
 
     public ResearchMission(int duration, List<Resource> requiredResources, List<Agents> requiredAgents,
-                           String researchDomain, Facility targetLab, int requiredSkillLevel) {
+            String researchDomain, Facility targetLab, int requiredSkillLevel) {
         super(duration, requiredResources, requiredAgents);
         this.researchDomain = researchDomain;
         this.dataPointsCollected = 0;
@@ -17,7 +17,7 @@ public class ResearchMission extends Mission {
     }
 
     @Override
-    public boolean checkCapabilities(List<Agent> assignedAgents) {
+    public boolean checkCapabilities(List<Agents> assignedAgents) {
         if (targetLab == null || !targetLab.isOperational()) {
             return false;
         }
@@ -35,7 +35,7 @@ public class ResearchMission extends Mission {
     @Override
     public void completeMission() {
         setState(MissionState.COMPLETED);
-        this.dataPointsCollected += 100; 
+        this.dataPointsCollected += 100;
     }
 
     public String getResearchDomain() {

@@ -7,9 +7,9 @@ public abstract class Mission {
     protected int duration;
     protected int elapsedTime;
     protected List<Resource> requiredResources;
-    protected List<Agent> requiredAgents;
+    protected List<Agents> requiredAgents;
 
-    public Mission(int duration, List<Resource> requiredResources, List<Agent> requiredAgents) {
+    public Mission(int duration, List<Resource> requiredResources, List<Agents> requiredAgents) {
         if (duration <= 0) {
             throw new IllegalArgumentException("Duration must be positive");
         }
@@ -57,11 +57,11 @@ public abstract class Mission {
         return copies;
     }
 
-    public List<Agent> getRequiredAgents() {
+    public List<Agents> getRequiredAgents() {
         return new ArrayList<>(requiredAgents);
     }
 
-    public abstract boolean checkCapabilities(List<Agent> assignedAgents);
+    public abstract boolean checkCapabilities(List<Agents> assignedAgents);
 
     public abstract void completeMission();
 

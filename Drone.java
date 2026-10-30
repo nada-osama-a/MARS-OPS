@@ -1,15 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 
-/**
- *
- * @author Yomna Mohamed
- */
-public class Drone extends robots {
+public class Drone extends Robots {
 
-    public Drone(int Battery_level, boolean healthDamage_status, String currnet_location, boolean availability, String mission) {
+    public Drone(int Battery_level, boolean healthDamage_status, String currnet_location, boolean availability,
+            String mission) {
         super(Battery_level, healthDamage_status, currnet_location, availability, mission);
     }
 

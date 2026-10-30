@@ -1,15 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+public class ExplorationRover extends Robots {
 
-/**
- *
- * @author Yomna Mohamed
- */
-public class ExplorationRover extends robots {
-
-    public ExplorationRover(int Battery_level, boolean healthDamage_status, String currnet_location, boolean availability, String mission) {
+    public ExplorationRover(int Battery_level, boolean healthDamage_status, String currnet_location,
+            boolean availability, String mission) {
         super(Battery_level, healthDamage_status, currnet_location, availability, mission);
     }
 

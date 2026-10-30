@@ -4,10 +4,10 @@ public class RescueMission extends Mission {
 
     private String distressLocation;
     private String requiredVehicle;
-    private Agent targetAgent;
+    private Agents targetAgent;
 
-    public RescueMission(int duration, List<Resource> requiredResources, List<Agent> requiredAgents,
-                         String distressLocation, String requiredVehicle, Agent targetAgent) {
+    public RescueMission(int duration, List<Resource> requiredResources, List<Agents> requiredAgents,
+            String distressLocation, String requiredVehicle, Agents targetAgent) {
         super(duration, requiredResources, requiredAgents);
         this.distressLocation = distressLocation;
         this.requiredVehicle = requiredVehicle;
@@ -15,14 +15,14 @@ public class RescueMission extends Mission {
     }
 
     @Override
-    public boolean checkCapabilities(List<Agent> assignedAgents) {
+    public boolean checkCapabilities(List<Agents> assignedAgents) {
         if (targetAgent == null) {
             return false;
         }
         if (assignedAgents == null) {
             return false;
         }
-        for (Agent agent : assignedAgents) {
+        for (Agents agent : assignedAgents) {
             if (!agent.isAvailable()) {
                 return false;
             }
@@ -34,7 +34,7 @@ public class RescueMission extends Mission {
     public void completeMission() {
         setState(MissionState.COMPLETED);
         if (targetAgent != null) {
-            targetAgent.setAvailable(true);
+            targetAgent.setAvailability(true);
         }
     }
 
@@ -46,7 +46,7 @@ public class RescueMission extends Mission {
         return requiredVehicle;
     }
 
-    public Agent getTargetAgent() {
+    public Agents getTargetAgent() {
         return targetAgent;
     }
 }

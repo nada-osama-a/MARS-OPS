@@ -7,7 +7,7 @@ public class ExplorationMission extends Mission {
     private double minBatteryLevel;
     private String requiredSkill;
 
-    public ExplorationMission(int duration, List<Resource> requiredResources, List<Agent> requiredAgents,
+    public ExplorationMission(int duration, List<Resource> requiredResources, List<Agents> requiredAgents,
                               String targetLocation, String requiredVehicleType, double minBatteryLevel, String requiredSkill) {
         super(duration, requiredResources, requiredAgents);
         this.targetLocation = targetLocation;
@@ -17,11 +17,11 @@ public class ExplorationMission extends Mission {
     }
 
     @Override
-    public boolean checkCapabilities(List<Agent> assignedAgents) {
+    public boolean checkCapabilities(List<Agents> assignedAgents) {
         if (assignedAgents == null) {
             return false;
         }
-        for (Agent agent : assignedAgents) {
+        for (Agents agent : assignedAgents) {
             if (!agent.isAvailable()) {
                 return false;
             }
