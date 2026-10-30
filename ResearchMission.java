@@ -7,7 +7,7 @@ public class ResearchMission extends Mission {
     private Facility targetLab;
     private int requiredSkillLevel;
 
-    public ResearchMission(int duration, List<Resource> requiredResources, List<Agent> requiredAgents,
+    public ResearchMission(int duration, List<Resource> requiredResources, List<Agents> requiredAgents,
                            String researchDomain, Facility targetLab, int requiredSkillLevel) {
         super(duration, requiredResources, requiredAgents);
         this.researchDomain = researchDomain;
@@ -24,7 +24,7 @@ public class ResearchMission extends Mission {
         if (assignedAgents == null) {
             return false;
         }
-        for (Agent agent : assignedAgents) {
+        for (Agents agent : assignedAgents) {
             if (!agent.isAvailable()) {
                 return false;
             }

@@ -2,17 +2,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package colonymars;
+
 
 /**
  *
  * @author Yomna Mohamed
  */
-public abstract class robots extends Agents {
+public abstract class Robots extends Agents {
     private int Battery_level;
     private boolean healthDamage_status;
 
-    public robots(int Battery_level, boolean healthDamage_status, String currnet_location, boolean availability, String mission) {
+    public Robots(int Battery_level, boolean healthDamage_status, String currnet_location, boolean availability, String mission) {
         super(currnet_location, availability, mission);
         this.Battery_level = Battery_level;
         this.healthDamage_status = healthDamage_status;
