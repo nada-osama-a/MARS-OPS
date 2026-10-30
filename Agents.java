@@ -1,20 +1,40 @@
 public abstract class Agents {
-    private String currnet_location;
+    protected String name;
+    protected String id;
+    protected String currentLocation;
     private boolean availability;
     private String mission;
-
-    public Agents(String currnet_location, boolean availability, String mission) {
-        this.currnet_location = currnet_location;
+    
+    public Agents(String name, String id, String currentLocation, boolean availability, String mission) {
+        this.name = name;
+        this.id = id;
+        this.currentLocation = currentLocation;
         this.availability = availability;
         this.mission = mission;
     }
 
-    public String getCurrnet_location() {
-        return currnet_location;
+    public String getName() {
+        return name;
     }
 
-    public void setCurrnet_location(String currnet_location) {
-        this.currnet_location = currnet_location;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getCurrentLocation() {
+        return currentLocation;
+    }
+
+    public void setCurrentLocation(String currentLocation) {
+        this.currentLocation = currentLocation;
     }
 
     public boolean isAvailable() {

@@ -1,31 +1,31 @@
-
 public abstract class Robots extends Agents {
-    private int Battery_level;
-    private boolean healthDamage_status;
+    private int batteryLevel;
+    private boolean healthDamageStatus;
 
-    public Robots(int Battery_level, boolean healthDamage_status, String currnet_location, boolean availability,
-            String mission) {
-        super(currnet_location, availability, mission);
-        this.Battery_level = Battery_level;
-        this.healthDamage_status = healthDamage_status;
+    public Robots(String name, String id, int batteryLevel, boolean healthDamageStatus, 
+                  String currentLocation, boolean availability, String mission) {
+        // Pass name and id up to the parent Agents constructor
+        super(name, id, currentLocation, availability, mission);
+        this.batteryLevel = batteryLevel;
+        this.healthDamageStatus = healthDamageStatus;
     }
 
-    public int getBattery_level() {
-        return Battery_level;
+    public int getBatteryLevel() {
+        return batteryLevel;
     }
 
-    public void setBattery_level(int Battery_level) {
-        this.Battery_level = Battery_level;
+    public void setBatteryLevel(int batteryLevel) {
+        this.batteryLevel = batteryLevel;
     }
 
-    public boolean isHealthDamage_status() {
-        return healthDamage_status;
+    public boolean isHealthDamageStatus() {
+        return healthDamageStatus;
     }
 
-    public void setHealthDamage_status(boolean healthDamage_status) {
-        this.healthDamage_status = healthDamage_status;
+    public void setHealthDamageStatus(boolean healthDamageStatus) {
+        this.healthDamageStatus = healthDamageStatus;
     }
 
-    public abstract void capablities();
-
+    
+    public abstract void capabilities();
 }

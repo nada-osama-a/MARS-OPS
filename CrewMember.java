@@ -1,34 +1,15 @@
 public abstract class CrewMember extends Agents {
-    private String name;
-    private int id;
     private int skill;
-    private String fatigue_level_human;
-    private boolean health_status;
+    private String fatigueLevelHuman;
+    private boolean healthStatus;
 
-    public CrewMember(String name, int id, int skill, String fatigue_level_human, boolean health_status,
-            String currnet_location, boolean availability, String mission) {
-        super(currnet_location, availability, mission);
-        this.name = name;
-        this.id = id;
+    public CrewMember(String name, String id, int skill, String fatigueLevelHuman, boolean healthStatus,
+                      String currentLocation, boolean availability, String mission) {
+        
+        super(name, id, currentLocation, availability, mission);
         this.skill = skill;
-        this.fatigue_level_human = fatigue_level_human;
-        this.health_status = health_status;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+        this.fatigueLevelHuman = fatigueLevelHuman;
+        this.healthStatus = healthStatus;
     }
 
     public int getSkill() {
@@ -39,22 +20,22 @@ public abstract class CrewMember extends Agents {
         this.skill = skill;
     }
 
-    public String getFatigue_level_human() {
-        return fatigue_level_human;
+    public String getFatigueLevelHuman() {
+        return fatigueLevelHuman;
     }
 
-    public void setFatigue_level_human(String fatigue_level_human) {
-        this.fatigue_level_human = fatigue_level_human;
+    public void setFatigueLevelHuman(String fatigueLevelHuman) {
+        this.fatigueLevelHuman = fatigueLevelHuman;
     }
 
-    public boolean isHealth_status() {
-        return health_status;
+    public boolean isHealthStatus() {
+        return healthStatus;
     }
 
-    public void setHealth_status(boolean health_status) {
-        this.health_status = health_status;
+    public void setHealthStatus(boolean healthStatus) {
+        this.healthStatus = healthStatus;
     }
 
-    public abstract void primary_responsibility();
-
+    
+    public abstract void primaryResponsibility();
 }

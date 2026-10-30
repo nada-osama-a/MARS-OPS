@@ -1,25 +1,20 @@
-
 public class RepairRobot extends Robots {
 
-    public RepairRobot(int Battery_level, boolean healthDamage_status, String currnet_location, boolean availability,
-            String mission) {
-        super(Battery_level, healthDamage_status, currnet_location, availability, mission);
+    public RepairRobot(String name, String id, int batteryLevel, boolean healthDamageStatus, 
+                       String currentLocation, boolean availability, String mission) {
+        
+        super(name, id, batteryLevel, healthDamageStatus, currentLocation, availability, mission);
     }
 
     @Override
-    public void capablities() {
-        System.out.println("Repairs damaged equipment and operates inside facilities.");
-
+    public void capabilities() {
+        System.out.println(getName() + " repairs damaged equipment and operates inside facilities.");
     }
 
     @Override
-
     public boolean canPerform(String mission) {
-        if (mission.equalsIgnoreCase("Repair equipment")) {
-            return true;
-        } else {
-            return false;
-        }
-
+        
+        return isAvailable() && !isHealthDamageStatus() && getBatteryLevel() > 15 
+                && mission.equalsIgnoreCase("Repair equipment");
     }
 }

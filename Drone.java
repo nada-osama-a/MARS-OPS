@@ -1,25 +1,20 @@
-
 public class Drone extends Robots {
 
-    public Drone(int Battery_level, boolean healthDamage_status, String currnet_location, boolean availability,
-            String mission) {
-        super(Battery_level, healthDamage_status, currnet_location, availability, mission);
+    public Drone(String name, String id, int batteryLevel, boolean healthDamageStatus, 
+                 String currentLocation, boolean availability, String mission) {
+        
+        super(name, id, batteryLevel, healthDamageStatus, currentLocation, availability, mission);
     }
 
     @Override
-    public void capablities() {
-        System.out.println("Performs aerial reconnaissance and operates in areas inaccessible to ground vehicles");
-
+    public void capabilities() {
+        System.out.println(getName() + " performs aerial reconnaissance and operates in areas inaccessible to ground vehicles.");
     }
 
     @Override
-
     public boolean canPerform(String mission) {
-        if (mission.equalsIgnoreCase("Performs aerial reconnaissance")) {
-            return true;
-        } else {
-            return false;
-        }
-
+        
+        return isAvailable() && !isHealthDamageStatus() && getBatteryLevel() > 10 
+                && (mission.equalsIgnoreCase("Aerial Reconnaissance") || mission.equalsIgnoreCase("Reconnaissance"));
     }
 }

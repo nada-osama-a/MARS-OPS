@@ -1,14 +1,14 @@
 
 public class MedicalOfficer extends CrewMember {
 
-    public MedicalOfficer(String name, int id, int skill, String fatigue_level_human, boolean health_status,
-            String currnet_location, boolean availability, String mission) {
-        super(name, id, skill, fatigue_level_human, health_status, currnet_location, availability, mission);
+    public MedicalOfficer(String name, String id, int skill, String fatigueLevelHuman, boolean healthStatus,
+            String currentLocation, boolean availability, String mission) {
+        super(name, id, skill, fatigueLevelHuman, healthStatus, currentLocation, availability, mission);
     }
 
     @Override
-    public void primary_responsibility() {
-        System.out.println("responds to medical emergencies");
+    public void primaryResponsibility() {
+        System.out.println(getName() + " responds to medical emergencies.");
     }
 
     @Override
