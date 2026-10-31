@@ -4,8 +4,8 @@ public abstract class CrewMember extends Agents {
     private boolean healthStatus;
 
     public CrewMember(String name, String id, int skill, String fatigueLevelHuman, boolean healthStatus,
-                      String currentLocation, boolean availability, String mission) {
-        
+            String currentLocation, boolean availability, Mission mission) {
+
         super(name, id, currentLocation, availability, mission);
         this.skill = skill;
         this.fatigueLevelHuman = fatigueLevelHuman;
@@ -25,6 +25,9 @@ public abstract class CrewMember extends Agents {
     }
 
     public void setFatigueLevelHuman(String fatigueLevelHuman) {
+        if (fatigueLevelHuman == null || fatigueLevelHuman.trim().isEmpty()) {
+            throw new IllegalArgumentException("level cannot be null");
+        }
         this.fatigueLevelHuman = fatigueLevelHuman;
     }
 
@@ -36,6 +39,5 @@ public abstract class CrewMember extends Agents {
         this.healthStatus = healthStatus;
     }
 
-    
     public abstract void primaryResponsibility();
 }

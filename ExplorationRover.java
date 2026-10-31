@@ -1,8 +1,8 @@
 public class ExplorationRover extends Robots {
 
-    public ExplorationRover(String name, String id, int batteryLevel, boolean healthDamageStatus, 
-                            String currentLocation, boolean availability, String mission) {
-        
+    public ExplorationRover(String name, String id, int batteryLevel, boolean healthDamageStatus,
+            String currentLocation, boolean availability, Mission mission) {
+
         super(name, id, batteryLevel, healthDamageStatus, currentLocation, availability, mission);
     }
 
@@ -12,9 +12,12 @@ public class ExplorationRover extends Robots {
     }
 
     @Override
-    public boolean canPerform(String mission) {
-        
-        return isAvailable() && !isHealthDamageStatus() && getBatteryLevel() > 20 
-                && mission.equalsIgnoreCase("Exploration");
+    public boolean canPerform(Mission mission) {
+        if (mission instanceof ExplorationMission)
+
+            return isAvailable() && !isHealthDamageStatus() && getBatteryLevel() > 20;
+        else
+            return false;
+
     }
 }

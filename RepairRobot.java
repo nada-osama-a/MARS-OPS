@@ -1,8 +1,8 @@
 public class RepairRobot extends Robots {
 
-    public RepairRobot(String name, String id, int batteryLevel, boolean healthDamageStatus, 
-                       String currentLocation, boolean availability, String mission) {
-        
+    public RepairRobot(String name, String id, int batteryLevel, boolean healthDamageStatus,
+            String currentLocation, boolean availability, Mission mission) {
+
         super(name, id, batteryLevel, healthDamageStatus, currentLocation, availability, mission);
     }
 
@@ -12,9 +12,10 @@ public class RepairRobot extends Robots {
     }
 
     @Override
-    public boolean canPerform(String mission) {
-        
-        return isAvailable() && !isHealthDamageStatus() && getBatteryLevel() > 15 
-                && mission.equalsIgnoreCase("Repair equipment");
+    public boolean canPerform(Mission mission) {
+        if (mission instanceof RepairMission)
+            return isAvailable() && !isHealthDamageStatus() && getBatteryLevel() > 20;
+        else
+            return false;
     }
 }
