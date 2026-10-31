@@ -5,7 +5,6 @@ public class RepairMission extends Mission {
     private Facility targetFacility;
     private String requiredPersonnelRole;
     private boolean requiresRepairRobot;
-
     public RepairMission(int duration, List<Resource> requiredResources, List<Agents> requiredAgents,
             Facility targetFacility, String requiredPersonnelRole, boolean requiresRepairRobot) {
         super(duration, requiredResources, requiredAgents);

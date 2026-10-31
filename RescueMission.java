@@ -5,6 +5,7 @@ public class RescueMission extends Mission {
     private String distressLocation;
     private String requiredVehicle;
     private Agents targetAgent;
+    private Environment environment;
 
     public RescueMission(int duration, List<Resource> requiredResources, List<Agents> requiredAgents,
             String distressLocation, String requiredVehicle, Agents targetAgent) {
@@ -26,6 +27,15 @@ public class RescueMission extends Mission {
             if (!agent.isAvailable()) {
                 return false;
             }
+        }
+        return true;
+    }
+
+    @Override
+    public boolean checkEnvironmentalConditions() {
+        if (environment.getType() == EnvironmentCondition.COMM_DISRUPTION) {
+            System.out.println("Mission submission failed:COMM_DISRUPTION");
+            return false;
         }
         return true;
     }

@@ -65,6 +65,9 @@ public abstract class Mission {
 
     public abstract void completeMission();
 
+    public abstract boolean checkEnvironmentalConditions();
+    
+
     @Override
     public String toString() {
         return "Mission{state=" + state

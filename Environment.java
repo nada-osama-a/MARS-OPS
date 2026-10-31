@@ -8,7 +8,7 @@ public class Environment {
     }
 
     public EnvironmentCondition getType() {
-        return type;
+        return type;    
     }
 
     public void updateHourly() {

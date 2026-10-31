@@ -53,6 +53,12 @@ public class MarsColony {
                 return false;
             }
         }
+        // checks if the environmental conditions are suitable for the mission
+        if(!mission.checkEnvironmentalConditions()){ 
+            mission.setState(MissionState.FAILED);
+            return false;
+            
+        }
 
         // If all checks pass, set the mission as active and in progress , mark the
         // assigned agents as unavailable and deduct the required resources from the
@@ -107,4 +113,6 @@ public class MarsColony {
     public List<Resource> getColonyInventory() {
         return colonyInventory;
     }
+
 }
+

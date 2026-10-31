@@ -6,6 +6,7 @@ public class ExplorationMission extends Mission {
     private String requiredVehicleType;
     private double minBatteryLevel;
     private String requiredSkill;
+    private Environment environment;
 
     public ExplorationMission(int duration, List<Resource> requiredResources, List<Agents> requiredAgents,
                               String targetLocation, String requiredVehicleType, double minBatteryLevel, String requiredSkill) {
@@ -27,6 +28,18 @@ public class ExplorationMission extends Mission {
             }
         }
         return true;
+    }
+    @Override
+    
+    public boolean checkEnvironmentalConditions() {
+        if(environment.getType() == EnvironmentCondition.DUST_STORM){
+            System.out.println("Mission submission failed: Dust storm");
+            return false;
+        } else if (environment.getType() == EnvironmentCondition.COMM_DISRUPTION) {
+            System.out.println("Mission submission failed: Communication disruption");
+            return false;
+        }
+    return true;
     }
 
     @Override
