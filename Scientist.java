@@ -1,7 +1,7 @@
 public class Scientist extends CrewMember {
 
     public Scientist(String name, String id, int skill, String fatigueLevelHuman, boolean healthStatus,
-            String currentLocation, boolean availability, String mission) {
+            String currentLocation, boolean availability, Mission mission) {
         super(name, id, skill, fatigueLevelHuman, healthStatus, currentLocation, availability, mission);
     }
 
@@ -11,8 +11,11 @@ public class Scientist extends CrewMember {
     }
 
     @Override
-    public boolean canPerform(String mission) {
-        
-        return isAvailable() && isHealthStatus() && mission.equalsIgnoreCase("Research");
+    public boolean canPerform(Mission mission) {
+        if (mission instanceof ResearchMission)
+            return isAvailable() && isHealthStatus() && getSkill() > 0
+                    && !getFatigueLevelHuman().equalsIgnoreCase("High");
+        else
+            return false;
     }
 }

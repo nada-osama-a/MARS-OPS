@@ -2,8 +2,8 @@ public abstract class Robots extends Agents {
     private int batteryLevel;
     private boolean healthDamageStatus;
 
-    public Robots(String name, String id, int batteryLevel, boolean healthDamageStatus, 
-                  String currentLocation, boolean availability, String mission) {
+    public Robots(String name, String id, int batteryLevel, boolean healthDamageStatus,
+            String currentLocation, boolean availability, Mission mission) {
         // Pass name and id up to the parent Agents constructor
         super(name, id, currentLocation, availability, mission);
         this.batteryLevel = batteryLevel;
@@ -15,7 +15,9 @@ public abstract class Robots extends Agents {
     }
 
     public void setBatteryLevel(int batteryLevel) {
-        this.batteryLevel = batteryLevel;
+        if (batteryLevel >= 0 && batteryLevel <= 100) {
+            this.batteryLevel = batteryLevel;
+        }
     }
 
     public boolean isHealthDamageStatus() {
@@ -26,6 +28,5 @@ public abstract class Robots extends Agents {
         this.healthDamageStatus = healthDamageStatus;
     }
 
-    
     public abstract void capabilities();
 }
