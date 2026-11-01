@@ -29,4 +29,13 @@ public abstract class Robots extends Agents {
     }
 
     public abstract void capabilities();
+        @Override
+    public boolean isHuman() {
+        return false;
+    }
+    
+    @Override
+    public boolean isRobot() {
+        return true;
+}
 }
