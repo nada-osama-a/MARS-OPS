@@ -20,15 +20,12 @@ public class MedicalOfficer extends CrewMember {
             return false;
         }
     }
-    @Override
-public boolean canHandleEmergency(Emergency emergency) {
 
-    if (emergency instanceof Fire) {
-        return isAvailable() && isHealthStatus();
+    @Override
+    public boolean canHandleEmergency(Emergency emergency) {
+
+        return emergency instanceof MedicalEmergency && isAvailable() && isHealthStatus() && getSkill() > 0
+                && !getFatigueLevelHuman().equalsIgnoreCase("High");
     }
 
-    return false;
 }
-
-}
-

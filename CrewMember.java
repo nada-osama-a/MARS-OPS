@@ -2,14 +2,17 @@ public abstract class CrewMember extends Agents {
     private int skill;
     private String fatigueLevelHuman;
     private boolean healthStatus;
+    private int healthLevel;
 
     public CrewMember(String name, String id, int skill, String fatigueLevelHuman, boolean healthStatus,
+            int healthLevel,
             String currentLocation, boolean availability, Mission mission) {
 
         super(name, id, currentLocation, availability, mission);
         this.skill = skill;
         this.fatigueLevelHuman = fatigueLevelHuman;
         this.healthStatus = healthStatus;
+        this.healthLevel = healthLevel;
     }
 
     public int getSkill() {
@@ -39,7 +42,21 @@ public abstract class CrewMember extends Agents {
         this.healthStatus = healthStatus;
     }
 
+    public int getHealthLevel() {
+        return healthLevel;
+    }
+
+    public void setHealthLevel(int healthLevel) {
+        if (healthLevel < 0 || healthLevel > 100) {
+            throw new IllegalArgumentException("Health level must be between 0 and 100");
+        }
+
+        this.healthLevel = healthLevel;
+    }
+
     public abstract void primaryResponsibility();
 
-    
+    public void increaseHealth() {
+        healthLevel = Math.min(100, healthLevel + 30);
+    }
 }

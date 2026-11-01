@@ -22,10 +22,6 @@ public class RepairRobot extends Robots {
     @Override
     public boolean canHandleEmergency(Emergency emergency) {
 
-        if (emergency instanceof Fire) {
-            return isAvailable() && !isHealthDamageStatus() && getBatteryLevel() > 20;
-        }
-
-        return false;
+        return emergency instanceof Fire && isAvailable() && !isHealthDamageStatus() && getBatteryLevel() > 20;
     }
 }
