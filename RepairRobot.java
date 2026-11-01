@@ -13,8 +13,10 @@ public class RepairRobot extends Robots {
 
     @Override
     public boolean canPerform(Mission mission) {
-        if (mission instanceof RepairMission)
-            return isAvailable() && !isHealthDamageStatus() && getBatteryLevel() > 20;
+        if (mission instanceof RepairMission repairMission)
+            return isAvailable() 
+            && !isHealthDamageStatus() 
+            && getBatteryLevel() > 20;
         else
             return false;
     }

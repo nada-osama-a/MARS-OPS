@@ -21,13 +21,15 @@ public class ResearchMission extends Mission {
         if (targetLab == null || !targetLab.isOperational()) {
             return false;
         }
-        if (assignedAgents == null) {
+        if (assignedAgents == null || assignedAgents.isEmpty()) {
             return false;
         }
         for (Agents agent : assignedAgents) {
-            if (!agent.isAvailable()) {
+            if (!agent.canPerform(this)) {
                 return false;
             }
+
+
         }
         return true;
     }

@@ -15,7 +15,9 @@ public class ExplorationRover extends Robots {
     public boolean canPerform(Mission mission) {
         if (mission instanceof ExplorationMission)
 
-            return isAvailable() && !isHealthDamageStatus() && getBatteryLevel() > 20;
+            return isAvailable() 
+            && !isHealthDamageStatus() 
+            && getBatteryLevel() > 20;
         else
             return false;
 

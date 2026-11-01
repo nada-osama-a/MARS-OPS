@@ -14,7 +14,8 @@ public class MedicalOfficer extends CrewMember {
     @Override
     public boolean canPerform(Mission mission) {
         if (mission instanceof RescueMission) {
-            return isAvailable() && isHealthStatus() && getSkill() > 0
+            return isAvailable()
+                    && isHealthStatus()
                     && !getFatigueLevelHuman().equalsIgnoreCase("High");
         } else {
             return false;

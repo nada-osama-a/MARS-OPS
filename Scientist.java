@@ -12,9 +12,18 @@ public class Scientist extends CrewMember {
 
     @Override
     public boolean canPerform(Mission mission) {
-        if (mission instanceof ResearchMission)
-            return isAvailable() && isHealthStatus() && getSkill() > 0
+        if (mission instanceof ExplorationMission explorationMission)
+            return isAvailable() 
+                    && isHealthStatus() 
+                    && getSkill() >= explorationMission.getRequiredSkill()
                     && !getFatigueLevelHuman().equalsIgnoreCase("High");
+
+        if (mission instanceof ResearchMission researchMission)
+            return isAvailable() 
+                    && isHealthStatus() 
+                    && getSkill() >= researchMission.getRequiredSkillLevel()
+                    && !getFatigueLevelHuman().equalsIgnoreCase("High");
+
         else
             return false;
     }

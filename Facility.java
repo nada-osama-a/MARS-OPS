@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Facility {
 
@@ -8,7 +9,6 @@ public abstract class Facility {
     private String location;
     private boolean isOperational;
 
-    private final ArrayList<Equipment> equipment = new ArrayList<>();
     private final ArrayList<Resource> resources = new ArrayList<>();
 
     public Facility(String name, int id, int capacity, String location, boolean isOperational) {
@@ -23,9 +23,11 @@ public abstract class Facility {
         setLocation(location);
         setOperational(isOperational);
     }
-public boolean providesCommunication() {
-    return false;
-}
+
+    public boolean providesCommunication() {
+        return false;
+    }
+
     public String getName() {
         return name;
     }
@@ -74,31 +76,31 @@ public boolean providesCommunication() {
         this.isOperational = isOperational;
     }
 
-    public ArrayList<Equipment> getEquipment() {
-        return new ArrayList<>(equipment);
-    }
+    // public List<Equipment> getEquipment() {
+    //     return new ArrayList<>(equipment);
+    // }
 
-    public void addEquipment(Equipment item) {
-        if (item == null) {
-            throw new IllegalArgumentException("Equipment cannot be null");
-        }
+    // public void addEquipment(Equipment item) {
+    //     if (item == null) {
+    //         throw new IllegalArgumentException("Equipment cannot be null");
+    //     }
 
-        equipment.add(item);
-    }
+    //     equipment.add(item);
+    // }
 
-    public boolean removeEquipment(Equipment item) {
-        return equipment.remove(item);
-    }
+    // public boolean removeEquipment(Equipment item) {
+    //     return equipment.remove(item);
+    // }
 
-    public ArrayList<Resource> getResources() {
-        ArrayList<Resource> copies = new ArrayList<>();
+    // public ArrayList<Resource> getResources() {
+    //     ArrayList<Resource> copies = new ArrayList<>();
 
-        for (Resource resource : resources) {
-            copies.add(new Resource(resource.getType(), resource.getQuantity()));
-        }
+    //     for (Resource resource : resources) {
+    //         copies.add(new Resource(resource.getType(), resource.getQuantity()));
+    //     }
 
-        return copies;
-    }
+    //     return copies;
+    // }
 
     public void addResource(Resource resource) {
         if (resource == null) {
@@ -159,7 +161,7 @@ public boolean providesCommunication() {
                 + ", capacity=" + capacity
                 + ", location='" + location + '\''
                 + ", operational=" + isOperational
-                + ", equipment=" + equipment
+                //+ ", equipment=" + equipment
                 + ", resources=" + resources + '}';
     }
 }
