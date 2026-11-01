@@ -19,4 +19,13 @@ public class Engineer extends CrewMember {
         else
             return false;
     }
+
+    @Override
+    public boolean canHandleEmergency(Emergency emergency) {
+        if (emergency instanceof Fire) {
+            return isAvailable() && isHealthStatus();
+        }
+
+        return false;
+    }
 }

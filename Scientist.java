@@ -18,4 +18,10 @@ public class Scientist extends CrewMember {
         else
             return false;
     }
+
+    @Override
+    public boolean canHandleEmergency(Emergency emergency) {
+
+        return false;
+    }
 }
