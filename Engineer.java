@@ -31,6 +31,3 @@ public class Engineer extends CrewMember {
                 && !getFatigueLevelHuman().equalsIgnoreCase("High");
     }
 
-        return false;
-    }
-}
