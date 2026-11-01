@@ -40,6 +40,14 @@ public abstract class CrewMember extends Agents {
     }
 
     public abstract void primaryResponsibility();
-
     
+        @Override
+    public boolean isHuman() {
+        return true;
+    }
+    
+    @Override
+    public boolean isRobot() {
+        return false;
+}
 }
