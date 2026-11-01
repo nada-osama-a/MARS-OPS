@@ -4,6 +4,7 @@ public abstract class Agents {
     protected String currentLocation;
     private boolean availability;
     private Mission mission;
+    private static int timeCounter = 1;
 
     public Agents(String name, String id, String currentLocation, boolean availability, Mission mission) {
         this.name = name;
@@ -11,6 +12,31 @@ public abstract class Agents {
         this.currentLocation = currentLocation;
         this.availability = availability;
         this.mission = mission;
+    }
+
+    public void advanceTime() {
+        timeCounter++;
+
+        if (this instanceof Robots) {
+            ((Robots) this).setBatteryLevel(timeCounter);
+        }
+        if (timeCounter < 0) {
+            throw new IllegalArgumentException("Time cannot be negative");
+        } else if (timeCounter == 0) {
+            return;
+        } else if (timeCounter > 3) {
+            if (this instanceof CrewMember) {
+                CrewMember crewMember = (CrewMember) this;
+                if (crewMember.getFatigueLevelHuman().equals("LOW")) {
+                    crewMember.setFatigueLevelHuman("MEDIUM");
+                } else if (crewMember.getFatigueLevelHuman().equals("MEDIUM")) {
+                    crewMember.setFatigueLevelHuman("HIGH");
+                } else if (crewMember.getFatigueLevelHuman().equals("HIGH")) {
+                    crewMember.setHealthStatus(false);
+                }
+            }
+        }
+
     }
 
     public String getName() {

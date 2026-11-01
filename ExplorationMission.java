@@ -29,18 +29,7 @@ public class ExplorationMission extends Mission {
         }
         return true;
     }
-    @Override
-    
-    public boolean checkEnvironmentalConditions() {
-        if(environment.getType() == EnvironmentCondition.DUST_STORM){
-            System.out.println("Mission submission failed: Dust storm");
-            return false;
-        } else if (environment.getType() == EnvironmentCondition.COMM_DISRUPTION) {
-            System.out.println("Mission submission failed: Communication disruption");
-            return false;
-        }
-    return true;
-    }
+
 
     @Override
     public void completeMission() {

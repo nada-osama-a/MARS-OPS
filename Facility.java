@@ -7,6 +7,7 @@ public abstract class Facility {
     private int capacity;
     private String location;
     private boolean isOperational;
+    private int unitConsumption = 1;
 
     private final ArrayList<Equipment> equipment = new ArrayList<>();
     private final ArrayList<Resource> resources = new ArrayList<>();
@@ -23,9 +24,25 @@ public abstract class Facility {
         setLocation(location);
         setOperational(isOperational);
     }
-public boolean providesCommunication() {
-    return false;
-}
+
+    public void advanceTime() {
+        if (!isOperational) {
+            return;
+        }
+        
+        for (Resource resource : resources) {
+            if (resource.getQuantity() >= unitConsumption) {
+                resource.removeQuantity(unitConsumption);
+            } else {
+                resource.removeQuantity(resource.getQuantity());
+            }
+        }
+    }
+
+    public boolean providesCommunication() {
+        return false;
+    }
+
     public String getName() {
         return name;
     }
@@ -128,6 +145,7 @@ public boolean providesCommunication() {
 
         return 0;
     }
+
 
     public boolean removeResourceQuantity(ResourceType type, int amount) {
         if (type == null) {

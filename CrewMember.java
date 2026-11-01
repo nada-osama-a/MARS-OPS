@@ -40,4 +40,6 @@ public abstract class CrewMember extends Agents {
     }
 
     public abstract void primaryResponsibility();
+
+    
 }

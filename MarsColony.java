@@ -6,7 +6,24 @@ public class MarsColony {
     private List<Agents> colonyAgents = new ArrayList<>();
     private List<Facility> colonyFacilities = new ArrayList<>();
     private List<Resource> colonyInventory = new ArrayList<>();
+    private Environment environment = new Environment();
 
+    //time update
+    public void updateTime() {
+       
+        if (activeMission != null) {  
+            activeMission.advanceTime();
+        }
+        environment.advanceTime();
+
+        for (Facility facility : colonyFacilities) {
+            facility.advanceTime();
+        }
+        for (Agents agent : colonyAgents) {
+            agent.advanceTime();
+        }
+    }
+    
     public boolean submitMission(Mission mission, List<Agents> assignedAgents) {
         if (mission == null) {
             throw new IllegalArgumentException("Mission cannot be null.");
@@ -54,10 +71,15 @@ public class MarsColony {
             }
         }
         // checks if the environmental conditions are suitable for the mission
-        if(!mission.checkEnvironmentalConditions()){ 
+        if (environment.getType() == EnvironmentCondition.COMM_DISRUPTION &&( mission instanceof RescueMission|| mission instanceof ExplorationMission)) {
             mission.setState(MissionState.FAILED);
+            System.out.println("Mission submission failed: COMM_DISRUPTION");
             return false;
-            
+        }
+        else if (environment.getType() == EnvironmentCondition.DUST_STORM && mission instanceof ExplorationMission) {
+            mission.setState(MissionState.FAILED);
+            System.out.println("Mission submission failed: DUST_STORM");
+            return false;
         }
 
         // If all checks pass, set the mission as active and in progress , mark the
@@ -78,6 +100,9 @@ public class MarsColony {
         mission.setState(MissionState.IN_PROGRESS);
         System.out.println("Mission submission successful: Mission is now active and in progress.");
         return true;
+
+        
+        
 
     }
 
@@ -112,6 +137,12 @@ public class MarsColony {
 
     public List<Resource> getColonyInventory() {
         return colonyInventory;
+    }
+    public Environment getEnvironment() {
+        return environment;
+    }
+    public void setEnvironment(Environment environment) {
+        this.environment = environment;
     }
 
 }

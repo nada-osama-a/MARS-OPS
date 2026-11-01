@@ -28,7 +28,8 @@ public class Simulation {
     checkEmergency(); // check for emergency after each tick
         
     }
-    public void advanceTime(int units){
+
+    public void advanceTime(int units){   // onlly simulate that time units have passed
         for (int i = 0; i < units; i++){
             tick();
         }

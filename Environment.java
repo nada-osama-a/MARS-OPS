@@ -4,14 +4,22 @@ public class Environment {
 
     public Environment(EnvironmentCondition type, int duration) {
         this.type = type;
-        this.durationRemaining = duration;
+        if (duration < 0) {
+            throw new IllegalArgumentException("Duration cannot be negative");
+        }else {
+            this.durationRemaining = duration;
+        }
+    }
+    public Environment() {
+        this.type = EnvironmentCondition.NORMAL;
+        this.durationRemaining = 0;
     }
 
     public EnvironmentCondition getType() {
         return type;    
     }
 
-    public void updateHourly() {
+    public void advanceTime() {
         if (durationRemaining > 0)
             durationRemaining--;
     }
