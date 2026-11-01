@@ -3,14 +3,19 @@ import java.util.List;
 public class RepairMission extends Mission {
 
     private Facility targetFacility;
-    private String requiredPersonnelRole;
-    private boolean requiresRepairRobot;
+    private int requiredSkillLevel;
+    
+
     public RepairMission(int duration, List<Resource> requiredResources, List<Agents> requiredAgents,
-            Facility targetFacility, String requiredPersonnelRole, boolean requiresRepairRobot) {
+            Facility targetFacility, int requiredSkillLevel) {
         super(duration, requiredResources, requiredAgents);
         this.targetFacility = targetFacility;
-        this.requiredPersonnelRole = requiredPersonnelRole;
-        this.requiresRepairRobot = requiresRepairRobot;
+
+        if(requiredSkillLevel < 0) {
+            throw new IllegalArgumentException("Required skill level cannot be negative.");
+        }
+        this.requiredSkillLevel = requiredSkillLevel;
+        
     }
 
     @Override
@@ -18,11 +23,11 @@ public class RepairMission extends Mission {
         if (targetFacility == null || targetFacility.isOperational()) {
             return false;
         }
-        if (assignedAgents == null) {
+        if (assignedAgents == null || assignedAgents.isEmpty()) {
             return false;
         }
         for (Agents agent : assignedAgents) {
-            if (!agent.isAvailable()) {
+            if (!agent.canPerform(this)) {
                 return false;
             }
         }
@@ -41,11 +46,9 @@ public class RepairMission extends Mission {
         return targetFacility;
     }
 
-    public String getRequiredPersonnelRole() {
-        return requiredPersonnelRole;
+    public int getRequiredSkillLevel() {
+        return requiredSkillLevel;
     }
 
-    public boolean isRequiresRepairRobot() {
-        return requiresRepairRobot;
-    }
+    
 }

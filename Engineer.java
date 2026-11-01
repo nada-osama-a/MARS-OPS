@@ -12,8 +12,10 @@ public class Engineer extends CrewMember {
 
     @Override
     public boolean canPerform(Mission mission) {
-        if (mission instanceof RepairMission)
-            return isAvailable() && isHealthStatus() && getSkill() > 0
+        if (mission instanceof RepairMission repairMission)
+            return isAvailable()
+                    && isHealthStatus() 
+                    && getSkill() >= repairMission.getRequiredSkillLevel()
                     && !getFatigueLevelHuman().equalsIgnoreCase("High");
 
         else
