@@ -21,13 +21,14 @@ public class RepairRobot extends Robots {
             return false;
     }
 
-        @Override
-    public boolean canHandleEmergency(Emergency emergency) {
-        return (emergency instanceof Fire || emergency instanceof OxygenLeakEmergency)
-                && isAvailable()
-                && !isHealthDamageStatus()
-                && getBatteryLevel() > 20;
-    }
-        return false;
-    }
+   @Override
+public boolean canHandleEmergency(Emergency emergency) {
+
+    return (emergency instanceof Fire
+            || emergency instanceof OxygenLeakEmergency
+            || emergency instanceof RoverBreakdownEmergency)
+            && isAvailable()
+            && !isHealthDamageStatus()
+            && getBatteryLevel() > 20;
+}
 }

@@ -23,14 +23,14 @@ public class Engineer extends CrewMember {
     }
 
     @Override
-    public boolean canHandleEmergency(Emergency emergency) {
-        return (emergency instanceof Fire || emergency instanceof OxygenLeakEmergency)
-                && isAvailable()
-                && isHealthStatus()
-                && getSkill() > 0
-                && !getFatigueLevelHuman().equalsIgnoreCase("High");
-    }
+public boolean canHandleEmergency(Emergency emergency) {
 
-        return false;
-    }
+    return (emergency instanceof Fire
+            || emergency instanceof OxygenLeakEmergency
+            || emergency instanceof RoverBreakdownEmergency)
+            && isAvailable()
+            && isHealthStatus()
+            && getSkill() > 0
+            && !getFatigueLevelHuman().equalsIgnoreCase("High");
+}
 }

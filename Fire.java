@@ -6,7 +6,7 @@ public class Fire extends Emergency {
     private List<Agents> responders;
     private String unresolvedReason;
 
-    public Fire(String state, Agents agent, Facility facility, Laboratory targetLaboratory, List<Agents> responders,
+    public Fire(EmergencyState state, Agents agent, Facility facility, Laboratory targetLaboratory, List<Agents> responders,
             String unresolvedReason) {
         super(state, agent, facility);
         if (targetLaboratory == null) {
