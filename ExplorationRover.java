@@ -20,4 +20,10 @@ public class ExplorationRover extends Robots {
             return false;
 
     }
+
+    @Override
+    public boolean canHandleEmergency(Emergency emergency) {
+
+        return false;
+    }
 }

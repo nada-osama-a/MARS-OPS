@@ -20,4 +20,8 @@ public class Drone extends Robots {
             return false;
     }
 
+    @Override
+    public boolean canHandleEmergency(Emergency emergency) {
+        return false;
+    }
 }

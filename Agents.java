@@ -65,4 +65,6 @@ public abstract class Agents {
 
     public abstract boolean canPerform(Mission mission); // 34an n7dd 3la asass anhy mission hn7dd el perform for
                                                          // example
+    public abstract boolean canHandleEmergency(Emergency emergency);
+                                                         
 }
