@@ -1,24 +1,13 @@
 package MarsColony.Simulations;
 
-import MarsColony.Agent.Agents;
-import MarsColony.Agent.CrewMembers.Engineer;
-import MarsColony.Agent.CrewMembers.Scientist;
-import MarsColony.Agent.Robot.ExplorationRover;
-import MarsColony.Agent.Robot.RepairRobot;
 import MarsColony.Colony.MarsColony;
-import MarsColony.Emergencies.EmergencyState;
-import MarsColony.Emergencies.OxygenLeakEmergency;
-import MarsColony.Environments.Environment;
-import MarsColony.Environments.EnvironmentCondition;
-import MarsColony.Facilities.Equipment;
-import MarsColony.Facilities.EquipmentType;
-import MarsColony.Facilities.Habitat;
-import MarsColony.Facilities.LeakState;
-import MarsColony.Facilities.Resource;
-import MarsColony.Facilities.ResourceType;
-import MarsColony.Facilities.StorageFacility;
-import MarsColony.Missions.ExplorationMission;
-import MarsColony.Missions.MissionState;
+import MarsColony.Agent.Agents;
+import MarsColony.Agent.CrewMembers.*;
+import MarsColony.Agent.Robot.*;
+import MarsColony.Emergencies.*;
+import MarsColony.Environments.*;
+import MarsColony.Facilities.*;
+import MarsColony.Missions.*;
 
 import java.util.ArrayList;
 import java.util.List;
