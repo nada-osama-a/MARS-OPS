@@ -1,4 +1,4 @@
-package MarsColony.Enviroments;
+package MarsColony.Environments;
 public class Environment {
     private EnvironmentCondition type;
     private int durationRemaining;

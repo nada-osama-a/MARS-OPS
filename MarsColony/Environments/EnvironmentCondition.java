@@ -1,4 +1,4 @@
-package MarsColony.Enviroments;
+package MarsColony.Environments;
 public enum EnvironmentCondition {
     NORMAL,
     DUST_STORM,

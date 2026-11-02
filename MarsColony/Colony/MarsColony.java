@@ -3,7 +3,7 @@ package MarsColony.Colony;
 import MarsColony.Agent.*;
 import MarsColony.Emergencies.Emergency;
 import MarsColony.Emergencies.EmergencyState;
-import MarsColony.Enviroments.*;
+import MarsColony.Environments.*;
 import MarsColony.Facilities.*;
 import MarsColony.Missions.*;
 
