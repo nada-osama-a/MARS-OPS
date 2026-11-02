@@ -34,6 +34,12 @@ public class ResearchMission extends Mission {
         return true;
     }
 
+    @Override 
+    public EquipmentType getRequiredEquipmentType() {
+        return EquipmentType.SCIENTIFIC; 
+    }
+
+
     @Override
     public void completeMission() {
         setState(MissionState.COMPLETED);

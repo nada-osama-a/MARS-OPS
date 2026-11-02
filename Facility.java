@@ -10,6 +10,7 @@ public abstract class Facility {
     private int unitConsumption = 1;
 
     private final ArrayList<Resource> resources = new ArrayList<>();
+    private final ArrayList<Equipment> equipment = new ArrayList<>();
 
     public Facility(String name, int id, int capacity, String location, boolean isOperational) {
 
@@ -90,21 +91,21 @@ public abstract class Facility {
         this.isOperational = isOperational;
     }
 
-    // public List<Equipment> getEquipment() {
-    //     return new ArrayList<>(equipment);
-    // }
+    public ArrayList<Equipment> getEquipment() {
+        return new ArrayList<>(equipment);
+    }
 
-    // public void addEquipment(Equipment item) {
-    //     if (item == null) {
-    //         throw new IllegalArgumentException("Equipment cannot be null");
-    //     }
+    public void addEquipment(Equipment item) {
+        if (item == null) {
+            throw new IllegalArgumentException("Equipment cannot be null");
+        }
 
-    //     equipment.add(item);
-    // }
+        equipment.add(item);
+    }
 
-    // public boolean removeEquipment(Equipment item) {
-    //     return equipment.remove(item);
-    // }
+    public boolean removeEquipment(Equipment item) {
+        return equipment.remove(item);
+    }
 
     // public ArrayList<Resource> getResources() {
     //     ArrayList<Resource> copies = new ArrayList<>();
@@ -176,7 +177,7 @@ public abstract class Facility {
                 + ", capacity=" + capacity
                 + ", location='" + location + '\''
                 + ", operational=" + isOperational
-                //+ ", equipment=" + equipment
+                + ", equipment=" + equipment
                 + ", resources=" + resources + '}';
     }
 }

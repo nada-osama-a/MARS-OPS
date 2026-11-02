@@ -1,14 +1,11 @@
 public class Equipment {
 
-    private final String name;
+    // private final String name;
     private final EquipmentType type;
     private boolean operational = true;
+    private boolean available = true;
 
-    public Equipment(String name, EquipmentType type) {
-        if (name == null || name.trim().isEmpty()) {
-            throw new IllegalArgumentException("Name cannot be null or blank");
-        }
-        this.name = name;
+    public Equipment(EquipmentType type) {
 
         if (type == null) {
             throw new IllegalArgumentException("Equipment type cannot be null");
@@ -17,12 +14,8 @@ public class Equipment {
 
     }
 
-    public String getName() {
-        return name;
-    }
-
     public EquipmentType getType() {
-    return type;
+        return type;
     }
 
     public boolean isOperational() {
@@ -31,6 +24,14 @@ public class Equipment {
 
     public void setOperational(boolean operational) {
         this.operational = operational;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 
     public void damage() {
@@ -43,8 +44,7 @@ public class Equipment {
 
     @Override
     public String toString() {
-        return "Equipment{name='" + name + '\''
-                + ", type=" + type
-                + ", operational=" + operational + '}';
+        return "Equipment{" + "type=" + type + ", operational=" + operational + '}';
+
     }
 }

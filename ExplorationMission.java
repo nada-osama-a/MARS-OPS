@@ -29,6 +29,11 @@ public class ExplorationMission extends Mission {
         return true;
     }
 
+    @Override 
+    public EquipmentType getRequiredEquipmentType() {
+        return EquipmentType.EXPLORATION; 
+    }
+
 
     @Override
     public void completeMission() {

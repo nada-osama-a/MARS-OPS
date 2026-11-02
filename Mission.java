@@ -49,6 +49,10 @@ public abstract class Mission {
         return elapsedTime;
     }
 
+    public EquipmentType getRequiredEquipmentType() {
+        return null; 
+    }
+
     public List<Resource> getRequiredResources() {
         List<Resource> copies = new ArrayList<>();
         for (Resource resource : requiredResources) {
