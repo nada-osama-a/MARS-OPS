@@ -123,15 +123,18 @@ public class MarsColony {
         if (!mission.checkCapabilities(assignedAgents)) {
             mission.setState(MissionState.FAILED);
             System.out.println(
-                    "Mission submission failed: Assigned agents are not capable of completing the mission or the facility isn't operational.");
+                    "Mission cannot be assigned. Reason: Agent does not possess the required capability.");
             return false;
         }
 
         // checks if the colony has the required resources for the mission
         for (Resource required : mission.getRequiredResources()) {
-            if (getColonyTotal(required.getType()) < required.getQuantity()) {
+            int available = getColonyTotal(required.getType());
+            if (available < required.getQuantity()) {
                 mission.setState(MissionState.FAILED);
-                System.out.println("Mission submission failed: Insufficient resources for the mission.");
+                System.out.println("Mission cannot start. Reason: Insufficient resources. Required "
+                        + required.getQuantity() + " " + required.getType()
+                        + ", available " + available + ". No resources were consumed.");
                 return false;
             }
         }
@@ -139,11 +142,12 @@ public class MarsColony {
         if (environment.getType() == EnvironmentCondition.COMM_DISRUPTION
                 && (mission instanceof RescueMission || mission instanceof ExplorationMission)) {
             mission.setState(MissionState.FAILED);
-            System.out.println("Mission submission failed: COMM_DISRUPTION");
+            System.out.println("Mission cannot start. Reason: Communication disruption prevents this operation.");
             return false;
         } else if (environment.getType() == EnvironmentCondition.DUST_STORM && mission instanceof ExplorationMission) {
             mission.setState(MissionState.FAILED);
-            System.out.println("Mission submission failed: DUST_STORM");
+            System.out.println(
+                    "Exploration Mission cannot start. Reason: Surface operations are not allowed during a dust storm.");
             return false;
         }
 

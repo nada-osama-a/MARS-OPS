@@ -21,8 +21,12 @@ public class Environment {
     }
 
     public void advanceTime() {
-        if (durationRemaining > 0)
+        if (durationRemaining > 0) {
             durationRemaining--;
+            if (durationRemaining == 0) {
+                type = EnvironmentCondition.NORMAL;
+            }
+        }
     }
 
     public boolean isExpired() {

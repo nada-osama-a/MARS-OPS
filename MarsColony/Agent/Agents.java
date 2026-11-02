@@ -11,7 +11,7 @@ public abstract class Agents {
     protected String currentLocation;
     private boolean availability;
     private Mission mission;
-    private static int timeCounter = 1;
+    private int timeUnitsLived;
 
     public Agents(String name, String id, String currentLocation, boolean availability, Mission mission) {
         this.name = name;
@@ -19,31 +19,30 @@ public abstract class Agents {
         this.currentLocation = currentLocation;
         this.availability = availability;
         this.mission = mission;
+        this.timeUnitsLived = 0;
     }
 
     public void advanceTime() {
-        timeCounter++;
+        timeUnitsLived++;
 
         if (this instanceof Robots) {
-            ((Robots) this).setBatteryLevel(timeCounter);
-        }
-        if (timeCounter < 0) {
-            throw new IllegalArgumentException("Time cannot be negative");
-        } else if (timeCounter == 0) {
-            return;
-        } else if (timeCounter > 3) {
-            if (this instanceof CrewMember) {
-                CrewMember crewMember = (CrewMember) this;
-                if (crewMember.getFatigueLevelHuman().equals("LOW")) {
-                    crewMember.setFatigueLevelHuman("MEDIUM");
-                } else if (crewMember.getFatigueLevelHuman().equals("MEDIUM")) {
-                    crewMember.setFatigueLevelHuman("HIGH");
-                } else if (crewMember.getFatigueLevelHuman().equals("HIGH")) {
-                    crewMember.setHealthStatus(false);
-                }
+            Robots robot = (Robots) this;
+            int battery = robot.getBatteryLevel();
+            if (battery > 0) {
+                robot.setBatteryLevel(battery - 1);
             }
         }
 
+        if (this instanceof CrewMember && timeUnitsLived > 3) {
+            CrewMember crewMember = (CrewMember) this;
+            if (crewMember.getFatigueLevelHuman().equalsIgnoreCase("LOW")) {
+                crewMember.setFatigueLevelHuman("MEDIUM");
+            } else if (crewMember.getFatigueLevelHuman().equalsIgnoreCase("MEDIUM")) {
+                crewMember.setFatigueLevelHuman("HIGH");
+            } else if (crewMember.getFatigueLevelHuman().equalsIgnoreCase("HIGH")) {
+                crewMember.setHealthStatus(false);
+            }
+        }
     }
 
     public String getName() {
