@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Executable demonstration of the five required Mars colony scenarios.
+ * Executable demonstration of the seven required Mars colony scenarios.
  * Run with: javac MarsColony\\**\\*.java && java MarsColony.Simulations.MainTest
  */
 public class MainTest {
@@ -28,9 +28,11 @@ public class MainTest {
         runScenario3ResourceShortage();
         runScenario4EmergencyHandling();
         runScenario5EnvironmentalEffect();
+        runScenario6FacilityRepair();
+        runScenario7RoverBreakdown();
 
         System.out.println("==============================================");
-        System.out.println("  ALL FIVE SCENARIOS COMPLETE");
+        System.out.println("  ALL SEVEN SCENARIOS COMPLETE");
         System.out.println("==============================================");
     }
 
@@ -301,7 +303,111 @@ public class MainTest {
         System.out.println(title);
         System.out.println("--------------------------------------------------------------");
     }
-
+    // ------------------------------------------------------------------
+    // Scenario 6: Successful facility repair
+    // ------------------------------------------------------------------
+    private static void runScenario6FacilityRepair() {
+        header("SCENARIO 6: Facility Repair — Offline Power Station");
+        MarsColony colony = new MarsColony();
+        // Repair missions are only accepted when the target is currently down.
+        PowerStation powerStation = new PowerStation(
+                "Reactor Beta", 20, 100, "South Ridge", false);
+        StorageFacility workshop = new StorageFacility(
+                "Repair Workshop", 21, 80, "South Ridge", true);
+        workshop.addResource(new Resource(ResourceType.SPARE_PARTS, 10));
+        Engineer engineer = new Engineer(
+                "Mona Adel", "ENG-03", 70, "LOW", true, "Repair Workshop", true, null, 100);
+        RepairRobot repairRobot = new RepairRobot(
+                "Sparky", "BOT-02", 85, false, "Repair Workshop", true, null);
+        colony.getColonyFacilities().add(powerStation);
+        colony.getColonyFacilities().add(workshop);
+        colony.getColonyAgents().add(engineer);
+        colony.getColonyAgents().add(repairRobot);
+        RepairMission mission = new RepairMission(
+                1,
+                List.of(new Resource(ResourceType.SPARE_PARTS, 3)),
+                List.of(engineer, repairRobot),
+                powerStation,
+                40);
+        System.out.println("Target facility: " + powerStation.getName()
+                + " | operational=" + powerStation.isOperational());
+        System.out.println("Repair team: " + engineer.getName() + " (Engineer), "
+                + repairRobot.getName() + " (RepairRobot)");
+        System.out.println("Spare parts before: " + workshop.getResourceQuantity(ResourceType.SPARE_PARTS));
+        System.out.println("Engineer canPerform(RepairMission) = " + engineer.canPerform(mission));
+        System.out.println("RepairRobot canPerform(RepairMission) = " + repairRobot.canPerform(mission));
+        boolean submitted = colony.submitMission(mission, List.of(engineer, repairRobot));
+        colony.updateTime();
+        System.out.println("\n--- SYSTEM STATE AFTER REPAIR ---");
+        System.out.println("Submission accepted: " + submitted);
+        System.out.println("Mission state: " + mission.getState());
+        System.out.println("Power station operational: " + powerStation.isOperational());
+        System.out.println("Spare parts after: " + workshop.getResourceQuantity(ResourceType.SPARE_PARTS)
+                + " (3 consumed by the mission)");
+        System.out.println("Engineer available: " + engineer.isAvailable());
+        System.out.println("Repair robot available: " + repairRobot.isAvailable());
+        System.out.println("Active colony mission: " + colony.getActiveMission());
+        System.out.println("Result: Offline power station restored by the repair team.\n");
+    }
+    // ------------------------------------------------------------------
+    // Scenario 7: Rover breakdown emergency
+    // ------------------------------------------------------------------
+    private static void runScenario7RoverBreakdown() {
+        header("SCENARIO 7: Rover Breakdown Emergency");
+        MarsColony colony = new MarsColony();
+        ExplorationRover rover = new ExplorationRover(
+                "Spirit", "ROV-04", 70, false, "Hellas Basin", true, null);
+        Engineer engineer = new Engineer(
+                "Hany Fawzy", "ENG-04", 80, "LOW", true, "Base Camp", true, null, 100);
+        RepairRobot repairRobot = new RepairRobot(
+                "Patch", "BOT-03", 92, false, "Base Camp", true, null);
+        StorageFacility depot = new StorageFacility(
+                "Field Depot", 30, 60, "Base Camp", true);
+        depot.addResource(new Resource(ResourceType.SPARE_PARTS, 8));
+        depot.addResource(new Resource(ResourceType.BATTERY, 15));
+        colony.getColonyAgents().add(rover);
+        colony.getColonyAgents().add(engineer);
+        colony.getColonyAgents().add(repairRobot);
+        colony.getColonyFacilities().add(depot);
+        RoverBreakdownEmergency breakdown = new RoverBreakdownEmergency(rover);
+        colony.addEmergency(breakdown);
+        System.out.println("1. Detect the emergency");
+        System.out.println("   Emergency class: " + breakdown.getClass().getSimpleName());
+        System.out.println("   Emergency state: " + breakdown.getState());
+        System.out.println("2. Locate the affected rover");
+        System.out.println("   Rover: " + rover.getName() + " at " + rover.getCurrentLocation());
+        System.out.println("   Damaged before response: " + rover.isHealthDamageStatus());
+        System.out.println("   Available before response: " + rover.isAvailable());
+        System.out.println("3. Identify suitable responders");
+        System.out.println("   Engineer: " + engineer.getName()
+                + " canHandle=" + engineer.canHandleEmergency(breakdown));
+        System.out.println("   Repair robot: " + repairRobot.getName()
+                + " canHandle=" + repairRobot.canHandleEmergency(breakdown));
+        System.out.println("   Spare parts before: " + depot.getResourceQuantity(ResourceType.SPARE_PARTS));
+        System.out.println("   Battery before: " + depot.getResourceQuantity(ResourceType.BATTERY));
+        System.out.println("4. Perform the response if possible");
+        colony.updateTime();
+        System.out.println("5. Consume the required resources (2 spare parts, 5 battery)");
+        System.out.println("   Spare parts after: " + depot.getResourceQuantity(ResourceType.SPARE_PARTS));
+        System.out.println("   Battery after: " + depot.getResourceQuantity(ResourceType.BATTERY)
+                + " (emergency used 5; facility upkeep also consumes 1 battery per tick)");
+        System.out.println("6. Update the rover state");
+        System.out.println("   Emergency state: " + breakdown.getState());
+        System.out.println("   Rover damaged after response: " + rover.isHealthDamageStatus());
+        System.out.println("   Rover available after response: " + rover.isAvailable());
+        System.out.println("   Engineer: "
+                + (breakdown.getEngineer() != null ? breakdown.getEngineer().getName() : "none"));
+        System.out.println("   Repair robot: "
+                + (breakdown.getRepairRobot() != null ? breakdown.getRepairRobot().getName() : "none"));
+        System.out.println("   Failure reason: "
+                + (breakdown.getFailureReason() == null ? "none" : breakdown.getFailureReason()));
+        boolean success = breakdown.getState() == EmergencyState.RESOLVED
+                && !rover.isHealthDamageStatus()
+                && rover.isAvailable();
+        System.out.println("Result: " + (success
+                ? "Rover repaired and returned to service."
+                : "Rover breakdown was not fully resolved.") + "\n");
+    }
     private static void printMissionAndAgents(ExplorationMission mission,
             Scientist scientist, ExplorationRover rover, MarsColony colony) {
         System.out.println("Mission state: " + mission.getState()
