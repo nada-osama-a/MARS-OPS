@@ -29,8 +29,11 @@ public abstract class Facility {
         if (!isOperational) {
             return;
         }
-        
         for (Resource resource : resources) {
+            if (resource.getType() == ResourceType.MEDICAL_SUPPLIES || resource.getType() == ResourceType.SPARE_PARTS) {
+                continue; 
+            }
+  
             if (resource.getQuantity() >= unitConsumption) {
                 resource.removeQuantity(unitConsumption);
             } else {

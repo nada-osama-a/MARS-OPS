@@ -4,7 +4,6 @@ import MarsColony.Agent.Agents;
 import MarsColony.Agent.CrewMembers.CrewMember;
 import MarsColony.Facilities.Facility;
 import MarsColony.Facilities.ResourceType;
-import MarsColony.Emergencies.EmergencyState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,9 +100,18 @@ public class MedicalEmergency extends Emergency {
                 break;
             }
         }
-        //patient.increaseHealth();
+        // patient.increaseHealth();
         setState(EmergencyState.RESOLVED);
         unresolvedReason = null;
     }
 
+    @Override
+    public boolean handleEmergency(
+            List<Agents> colonyAgents,
+            List<Facility> colonyFacilities) {
+
+        resolvedMedicalEmergency();
+
+        return getState() == EmergencyState.RESOLVED;
+    }
 }

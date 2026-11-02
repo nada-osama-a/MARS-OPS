@@ -6,7 +6,7 @@ public abstract class CrewMember extends Agents {
     private int skill;
     private String fatigueLevelHuman;
     private boolean healthStatus;
-    //private int healthLevel;
+
 
     public CrewMember(String name, String id, int skill, String fatigueLevelHuman, boolean healthStatus,
             String currentLocation, boolean availability, Mission mission) {

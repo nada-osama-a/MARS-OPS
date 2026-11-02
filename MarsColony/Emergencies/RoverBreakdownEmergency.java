@@ -1,4 +1,6 @@
+
 package MarsColony.Emergencies;
+
 import MarsColony.Agent.Agents;
 import MarsColony.Facilities.Facility;
 import MarsColony.Facilities.Resource;
@@ -35,6 +37,7 @@ public class RoverBreakdownEmergency extends Emergency {
         this.breakdownLocation = rover.getCurrentLocation();
     }
 
+    @Override
     public boolean handleEmergency(
             List<Agents> colonyAgents,
             List<Facility> colonyFacilities) {
@@ -43,11 +46,7 @@ public class RoverBreakdownEmergency extends Emergency {
             throw new IllegalArgumentException("Lists cannot be null");
         }
 
-        if (rover.isHealthDamageStatus()) {
-            failureReason = "Rover is already damaged";
-            setState(EmergencyState.UNRESOLVED);
-            return false;
-        }
+        failureReason = null;
 
         rover.setHealthDamageStatus(true);
         rover.setAvailability(false);
@@ -87,6 +86,8 @@ public class RoverBreakdownEmergency extends Emergency {
         try {
 
             rover.setHealthDamageStatus(false);
+            rover.setAvailability(true);
+
             setState(EmergencyState.RESOLVED);
 
             return true;
@@ -142,9 +143,11 @@ public class RoverBreakdownEmergency extends Emergency {
                 continue;
             }
 
-            totalSpareParts += facility.getResourceQuantity(ResourceType.SPARE_PARTS);
+            totalSpareParts += facility.getResourceQuantity(
+                    ResourceType.SPARE_PARTS);
 
-            totalBattery += facility.getResourceQuantity(ResourceType.BATTERY);
+            totalBattery += facility.getResourceQuantity(
+                    ResourceType.BATTERY);
         }
 
         if (totalSpareParts < SPARE_PARTS_REQUIRED
@@ -172,7 +175,8 @@ public class RoverBreakdownEmergency extends Emergency {
                     continue;
                 }
 
-                int available = facility.getResourceQuantity(resource.getType());
+                int available = facility.getResourceQuantity(
+                        resource.getType());
 
                 int amount = Math.min(available, remaining);
 
@@ -190,6 +194,7 @@ public class RoverBreakdownEmergency extends Emergency {
                         }
 
                         failureReason = "Failed to consume repair resources";
+
                         return false;
                     }
 

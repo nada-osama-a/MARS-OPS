@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import MarsColony.Agent.Agents;
+import MarsColony.Emergencies.Emergency;
+import MarsColony.Emergencies.EmergencyState;
 import MarsColony.Enviroments.Environment;
 import MarsColony.Enviroments.EnvironmentCondition;
 import MarsColony.Facilities.Facility;
@@ -14,17 +16,19 @@ import MarsColony.Missions.Mission;
 import MarsColony.Missions.MissionState;
 import MarsColony.Missions.RescueMission;
 
+
 public class MarsColony {
     private Mission activeMission;
     private List<Agents> colonyAgents = new ArrayList<>();
     private List<Facility> colonyFacilities = new ArrayList<>();
     private List<Resource> colonyInventory = new ArrayList<>();
     private Environment environment = new Environment();
+    private List<Emergency> pendingEmergencies = new ArrayList<>();
 
-    //time update
+    // time update
     public void updateTime() {
-       
-        if (activeMission != null) {  
+
+        if (activeMission != null) {
             activeMission.advanceTime();
         }
         environment.advanceTime();
@@ -35,8 +39,53 @@ public class MarsColony {
         for (Agents agent : colonyAgents) {
             agent.advanceTime();
         }
+        if (detectEmergency()) {
+            System.out.println("Emergency detected! Handling emergencies...");                                                        
+            handleEmergencies();
+        }
     }
-    
+
+//////  emergency handling/////
+
+    public void addEmergency(Emergency emergency) {
+        if (emergency == null) {
+            throw new IllegalArgumentException("Emergency cannot be null");
+        }
+        pendingEmergencies.add(emergency);
+    }
+
+    private boolean detectEmergency() {
+        return !pendingEmergencies.isEmpty();
+    }
+
+    private void handleEmergencies() {
+
+        if (!detectEmergency()) {
+            return;
+        }
+
+        for (int i = 0; i < pendingEmergencies.size(); i++) {
+            Emergency emergency = pendingEmergencies.get(i);
+
+            if (emergency.getState() != EmergencyState.ACTIVE) {
+                continue;
+            }
+            boolean resolved = emergency.handleEmergency(
+                    getColonyAgents(),
+                    getColonyFacilities());
+
+            if (resolved) {
+                System.out.println("Emergency handled successfully.");
+            } else {
+                System.out.println("Emergency handling failed.");
+            }
+        }
+
+        pendingEmergencies.clear();
+    }
+
+
+            //mission /////////////
     public boolean submitMission(Mission mission, List<Agents> assignedAgents) {
         if (mission == null) {
             throw new IllegalArgumentException("Mission cannot be null.");
@@ -84,12 +133,12 @@ public class MarsColony {
             }
         }
         // checks if the environmental conditions are suitable for the mission
-        if (environment.getType() == EnvironmentCondition.COMM_DISRUPTION &&( mission instanceof RescueMission|| mission instanceof ExplorationMission)) {
+        if (environment.getType() == EnvironmentCondition.COMM_DISRUPTION
+                && (mission instanceof RescueMission || mission instanceof ExplorationMission)) {
             mission.setState(MissionState.FAILED);
             System.out.println("Mission submission failed: COMM_DISRUPTION");
             return false;
-        }
-        else if (environment.getType() == EnvironmentCondition.DUST_STORM && mission instanceof ExplorationMission) {
+        } else if (environment.getType() == EnvironmentCondition.DUST_STORM && mission instanceof ExplorationMission) {
             mission.setState(MissionState.FAILED);
             System.out.println("Mission submission failed: DUST_STORM");
             return false;
@@ -114,11 +163,8 @@ public class MarsColony {
         System.out.println("Mission submission successful: Mission is now active and in progress.");
         return true;
 
-        
-        
-
     }
-
+    
     private Resource findResourceInInventory(ResourceType type) {
         for (Resource resource : colonyInventory) {
             if (resource.getType().equals(type)) {
@@ -151,12 +197,13 @@ public class MarsColony {
     public List<Resource> getColonyInventory() {
         return colonyInventory;
     }
+
     public Environment getEnvironment() {
         return environment;
     }
+
     public void setEnvironment(Environment environment) {
         this.environment = environment;
     }
 
 }
-

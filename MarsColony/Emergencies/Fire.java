@@ -1,4 +1,5 @@
 package MarsColony.Emergencies;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -6,7 +7,6 @@ import MarsColony.Agent.Agents;
 import MarsColony.Facilities.Facility;
 import MarsColony.Facilities.Laboratory;
 import MarsColony.Facilities.ResourceType;
-
 
 public class Fire extends Emergency {
     private Laboratory targetLaboratory;
@@ -153,5 +153,15 @@ public class Fire extends Emergency {
         setState(EmergencyState.RESOLVED);
         for (Agents agent : responders)
             agent.setAvailability(true);
+    }
+
+    @Override
+    public boolean handleEmergency(
+            List<Agents> colonyAgents,
+            List<Facility> colonyFacilities) {
+
+        resolveFire(false, false);
+
+        return getState() == EmergencyState.ACTIVE;
     }
 }

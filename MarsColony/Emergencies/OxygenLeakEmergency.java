@@ -8,7 +8,6 @@ import MarsColony.Facilities.Habitat;
 import MarsColony.Facilities.Resource;
 import MarsColony.Facilities.ResourceType;
 
-
 public class OxygenLeakEmergency extends Emergency {
 
     private static final int SPARE_PARTS_REQUIRED = 2;
@@ -132,8 +131,8 @@ public class OxygenLeakEmergency extends Emergency {
         List<Resource> removedResources = new ArrayList<>();
 
         Resource[] requiredResources = {
-            new Resource(ResourceType.SPARE_PARTS, SPARE_PARTS_REQUIRED),
-            new Resource(ResourceType.BATTERY, BATTERY_REQUIRED)
+                new Resource(ResourceType.SPARE_PARTS, SPARE_PARTS_REQUIRED),
+                new Resource(ResourceType.BATTERY, BATTERY_REQUIRED)
         };
 
         for (Resource required : requiredResources) {
@@ -146,8 +145,7 @@ public class OxygenLeakEmergency extends Emergency {
                     continue;
                 }
 
-                int available =
-                        facility.getResourceQuantity(required.getType());
+                int available = facility.getResourceQuantity(required.getType());
 
                 int amount = Math.min(available, remaining);
 
@@ -193,11 +191,9 @@ public class OxygenLeakEmergency extends Emergency {
                 continue;
             }
 
-            totalSpareParts +=
-                    facility.getResourceQuantity(ResourceType.SPARE_PARTS);
+            totalSpareParts += facility.getResourceQuantity(ResourceType.SPARE_PARTS);
 
-            totalBattery +=
-                    facility.getResourceQuantity(ResourceType.BATTERY);
+            totalBattery += facility.getResourceQuantity(ResourceType.BATTERY);
         }
 
         return totalSpareParts >= SPARE_PARTS_REQUIRED

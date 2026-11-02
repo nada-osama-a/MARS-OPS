@@ -2,9 +2,10 @@ package MarsColony.Emergencies;
 
 import MarsColony.Facilities.Facility;
 import MarsColony.Agent.Agents;
+import java.util.List;
 
+public abstract class Emergency {
 
-public class Emergency {
     protected EmergencyState state;
     protected Agents agent;
     protected Facility facility;
@@ -38,5 +39,8 @@ public class Emergency {
     public void setFacilitiy(Facility facility) {
         this.facility = facility;
     }
-    
+
+    public abstract boolean handleEmergency(
+            List<Agents> colonyAgents,
+            List<Facility> colonyFacilities);
 }
