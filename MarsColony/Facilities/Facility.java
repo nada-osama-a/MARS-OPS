@@ -1,6 +1,7 @@
 package MarsColony.Facilities;
 import java.util.ArrayList;
 
+
 public abstract class Facility {
 
     private String name;
@@ -11,6 +12,7 @@ public abstract class Facility {
     private int unitConsumption = 1;
 
     private final ArrayList<Resource> resources = new ArrayList<>();
+    private final ArrayList<Equipment> equipment = new ArrayList<>();
 
     public Facility(String name, int id, int capacity, String location, boolean isOperational) {
 
@@ -31,9 +33,9 @@ public abstract class Facility {
         }
         for (Resource resource : resources) {
             if (resource.getType() == ResourceType.MEDICAL_SUPPLIES || resource.getType() == ResourceType.SPARE_PARTS) {
-                continue; 
+                continue;
             }
-  
+
             if (resource.getQuantity() >= unitConsumption) {
                 resource.removeQuantity(unitConsumption);
             } else {
@@ -94,30 +96,30 @@ public abstract class Facility {
         this.isOperational = isOperational;
     }
 
-    // public List<Equipment> getEquipment() {
-    //     return new ArrayList<>(equipment);
-    // }
+    public ArrayList<Equipment> getEquipment() {
+        return new ArrayList<>(equipment);
+    }
 
-    // public void addEquipment(Equipment item) {
-    //     if (item == null) {
-    //         throw new IllegalArgumentException("Equipment cannot be null");
-    //     }
+    public void addEquipment(Equipment item) {
+        if (item == null) {
+            throw new IllegalArgumentException("Equipment cannot be null");
+        }
 
-    //     equipment.add(item);
-    // }
+        equipment.add(item);
+    }
 
-    // public boolean removeEquipment(Equipment item) {
-    //     return equipment.remove(item);
-    // }
+    public boolean removeEquipment(Equipment item) {
+        return equipment.remove(item);
+    }
 
     // public ArrayList<Resource> getResources() {
-    //     ArrayList<Resource> copies = new ArrayList<>();
+    // ArrayList<Resource> copies = new ArrayList<>();
 
-    //     for (Resource resource : resources) {
-    //         copies.add(new Resource(resource.getType(), resource.getQuantity()));
-    //     }
+    // for (Resource resource : resources) {
+    // copies.add(new Resource(resource.getType(), resource.getQuantity()));
+    // }
 
-    //     return copies;
+    // return copies;
     // }
 
     public void addResource(Resource resource) {
@@ -149,7 +151,6 @@ public abstract class Facility {
         return 0;
     }
 
-
     public boolean removeResourceQuantity(ResourceType type, int amount) {
         if (type == null) {
             throw new IllegalArgumentException("Resource type cannot be null");
@@ -180,7 +181,7 @@ public abstract class Facility {
                 + ", capacity=" + capacity
                 + ", location='" + location + '\''
                 + ", operational=" + isOperational
-                //+ ", equipment=" + equipment
+                + ", equipment=" + equipment
                 + ", resources=" + resources + '}';
     }
 }

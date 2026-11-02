@@ -1,9 +1,10 @@
 package MarsColony.Missions;
-import java.util.List;
 
 import MarsColony.Agent.Agents;
-import MarsColony.Facilities.Facility;
+import MarsColony.Facilities.*;
 import MarsColony.Facilities.Resource;
+
+import java.util.List;
 
 public class ResearchMission extends Mission {
 
@@ -34,9 +35,13 @@ public class ResearchMission extends Mission {
                 return false;
             }
 
-
         }
         return true;
+    }
+
+    @Override
+    public EquipmentType getRequiredEquipmentType() {
+        return EquipmentType.SCIENTIFIC;
     }
 
     @Override

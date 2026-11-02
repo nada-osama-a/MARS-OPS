@@ -1,20 +1,21 @@
 package MarsColony.Missions;
-import java.util.List;
 
 import MarsColony.Agent.Agents;
-import MarsColony.Facilities.Resource;
+import MarsColony.Facilities.*;
+
+import java.util.List;
 
 public class ExplorationMission extends Mission {
 
     private String targetLocation;
     private int requiredSkill;
-    
+
     public ExplorationMission(int duration, List<Resource> requiredResources, List<Agents> requiredAgents,
-                              String targetLocation, int requiredSkill) {
+            String targetLocation, int requiredSkill) {
         super(duration, requiredResources, requiredAgents);
         this.targetLocation = targetLocation;
-        
-        if(requiredSkill < 0) {
+
+        if (requiredSkill < 0) {
             throw new IllegalArgumentException("Required skill level cannot be negative");
         }
         this.requiredSkill = requiredSkill;
@@ -33,6 +34,10 @@ public class ExplorationMission extends Mission {
         return true;
     }
 
+    @Override
+    public EquipmentType getRequiredEquipmentType() {
+        return EquipmentType.EXPLORATION;
+    }
 
     @Override
     public void completeMission() {
@@ -47,5 +52,4 @@ public class ExplorationMission extends Mission {
         return requiredSkill;
     }
 
-    
 }

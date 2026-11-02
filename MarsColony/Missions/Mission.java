@@ -1,9 +1,11 @@
 package MarsColony.Missions;
-import java.util.ArrayList;
-import java.util.List;
 
 import MarsColony.Agent.Agents;
 import MarsColony.Facilities.Resource;
+import MarsColony.Facilities.EquipmentType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Mission {
 
@@ -53,6 +55,10 @@ public abstract class Mission {
         return elapsedTime;
     }
 
+    public EquipmentType getRequiredEquipmentType() {
+        return null;
+    }
+
     public List<Resource> getRequiredResources() {
         List<Resource> copies = new ArrayList<>();
         for (Resource resource : requiredResources) {
@@ -68,7 +74,6 @@ public abstract class Mission {
     public abstract boolean checkCapabilities(List<Agents> assignedAgents);
 
     public abstract void completeMission();
-
 
     @Override
     public String toString() {

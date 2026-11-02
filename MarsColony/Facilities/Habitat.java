@@ -136,7 +136,7 @@ public class Habitat extends Facility {
                 ", operational=" + isOperational() +
                 ", leakState=" + leakState +
                 ", leakLossAmount=" + leakLossAmount +
-                ", resources=" + getResources() +
+                ", oxygen=" + getResourceQuantity(ResourceType.OXYGEN) +
                 ", lifeSupportOperational="
                 + lifeSupportSystem.isOperational() +
                 ", lifeSupportEfficiency="

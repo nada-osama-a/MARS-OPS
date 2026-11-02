@@ -1,36 +1,41 @@
 package MarsColony.Colony;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import MarsColony.Agent.Agents;
+import MarsColony.Agent.*;
 import MarsColony.Emergencies.Emergency;
 import MarsColony.Emergencies.EmergencyState;
-import MarsColony.Enviroments.Environment;
-import MarsColony.Enviroments.EnvironmentCondition;
-import MarsColony.Facilities.Facility;
-import MarsColony.Facilities.Resource;
-import MarsColony.Facilities.ResourceType;
-import MarsColony.Missions.ExplorationMission;
-import MarsColony.Missions.Mission;
-import MarsColony.Missions.MissionState;
-import MarsColony.Missions.RescueMission;
+import MarsColony.Enviroments.*;
+import MarsColony.Facilities.*;
+import MarsColony.Missions.*;
 
+import java.util.ArrayList;
+import java.util.List;
 
 public class MarsColony {
     private Mission activeMission;
     private List<Agents> colonyAgents = new ArrayList<>();
     private List<Facility> colonyFacilities = new ArrayList<>();
-    private List<Resource> colonyInventory = new ArrayList<>();
+    private List<Agents> activeMissionAgents = new ArrayList<>();
     private Environment environment = new Environment();
-    private List<Emergency> pendingEmergencies = new ArrayList<>();
+    private Equipment activeMissionEquipment;
+        private List<Emergency> pendingEmergencies = new ArrayList<>();
+        private List<Resource> colonyInventory = new ArrayList<>();
 
-    // time update
+        // time update
     public void updateTime() {
 
         if (activeMission != null) {
             activeMission.advanceTime();
         }
+
+        if (activeMission != null
+                && (activeMission.getState() == MissionState.COMPLETED
+                        || activeMission.getState() == MissionState.FAILED)) {
+            releaseAgents();
+            releaseEquipment(activeMissionEquipment);
+            activeMission = null;
+            activeMissionEquipment = null;
+        }
+
         environment.advanceTime();
 
         for (Facility facility : colonyFacilities) {
@@ -40,11 +45,10 @@ public class MarsColony {
             agent.advanceTime();
         }
         if (detectEmergency()) {
-            System.out.println("Emergency detected! Handling emergencies...");                                                        
+            System.out.println("Emergency detected! Handling emergencies...");
             handleEmergencies();
         }
     }
-
 //////  emergency handling/////
 
     public void addEmergency(Emergency emergency) {
@@ -83,9 +87,9 @@ public class MarsColony {
 
         pendingEmergencies.clear();
     }
+    
 
-
-            //mission /////////////
+               //mission /////////////
     public boolean submitMission(Mission mission, List<Agents> assignedAgents) {
         if (mission == null) {
             throw new IllegalArgumentException("Mission cannot be null.");
@@ -125,8 +129,7 @@ public class MarsColony {
 
         // checks if the colony has the required resources for the mission
         for (Resource required : mission.getRequiredResources()) {
-            Resource stock = findResourceInInventory(required.getType());
-            if (stock == null || stock.getQuantity() < required.getQuantity()) {
+            if (getColonyTotal(required.getType()) < required.getQuantity()) {
                 mission.setState(MissionState.FAILED);
                 System.out.println("Mission submission failed: Insufficient resources for the mission.");
                 return false;
@@ -144,16 +147,29 @@ public class MarsColony {
             return false;
         }
 
+        EquipmentType requiredEquipmentType = mission.getRequiredEquipmentType();
+        if (requiredEquipmentType != null) {
+            Equipment assignedEquipment = assignEquipment(requiredEquipmentType);
+            if (assignedEquipment == null) {
+                mission.setState(MissionState.FAILED);
+                System.out
+                        .println("Mission submission failed: No available equipment of type " + requiredEquipmentType);
+                return false;
+            }
+            this.activeMissionEquipment = assignedEquipment;
+        }
+
         // If all checks pass, set the mission as active and in progress , mark the
         // assigned agents as unavailable and deduct the required resources from the
         // colony inventory
         for (Resource required : mission.getRequiredResources()) {
-            Resource stock = findResourceInInventory(required.getType());
-            stock.removeQuantity(required.getQuantity());
+            consumeResource(required.getType(), required.getQuantity());
         }
 
-        for (Agents agent : assignedAgents) {
+        for (Agents agent : assignedAgents) { // puts the assigned agents in the activeMissionAgents list and marks them
+                                              // unavailable
             agent.setAvailability(false);
+            this.activeMissionAgents.add(agent);
         }
 
         mission.setState(MissionState.ASSIGNED);
@@ -164,22 +180,63 @@ public class MarsColony {
         return true;
 
     }
-    
-    private Resource findResourceInInventory(ResourceType type) {
-        for (Resource resource : colonyInventory) {
-            if (resource.getType().equals(type)) {
-                return resource;
+
+    private int getColonyTotal(ResourceType type) {
+        int total = 0;
+        for (Facility facility : colonyFacilities) {
+            if (facility.isOperational()) {
+                total += facility.getResourceQuantity(type);
+            }
+        }
+        return total;
+    }
+
+    private void consumeResource(ResourceType type, int amount) {
+        int remaining = amount;
+        for (Facility facility : colonyFacilities) {
+            if (remaining == 0)
+                break;
+            if (!facility.isOperational())
+                continue;
+            int take = facility.getResourceQuantity(type);
+            if (take > remaining) {
+                take = remaining;
+            }
+
+            facility.removeResourceQuantity(type, take); // in facility class
+            remaining -= take;
+        }
+
+    }
+
+    private Equipment assignEquipment(EquipmentType type) {
+        for (Facility facility : colonyFacilities) {
+            if (!facility.isOperational()) {
+                continue;
+            }
+            for (Equipment equipment : facility.getEquipment()) {
+                if (equipment.getType() == type && equipment.isOperational() && equipment.isAvailable()) {
+                    equipment.setAvailable(false);
+                    return equipment;
+                }
             }
         }
         return null;
     }
 
+    private void releaseEquipment(Equipment equipment) {
+        if (equipment != null) {
+            equipment.setAvailable(true);
+        }
+    }
+
     // used to release agents after the mission is completed or failed , making them
     // available for future missions
-    private void releaseAgents(Mission mission) {
-        for (Agents agent : mission.getRequiredAgents()) {
+    private void releaseAgents() {
+        for (Agents agent : activeMissionAgents) {
             agent.setAvailability(true);
         }
+        activeMissionAgents.clear();
     }
 
     public Mission getActiveMission() {
@@ -193,7 +250,7 @@ public class MarsColony {
     public List<Facility> getColonyFacilities() {
         return colonyFacilities;
     }
-
+    
     public List<Resource> getColonyInventory() {
         return colonyInventory;
     }
